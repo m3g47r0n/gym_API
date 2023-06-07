@@ -1,4 +1,4 @@
-const getExercises = async (req, res, next) => {
+const getLike = async (req, res, next) => {
     try {
         console.log(req.url);
         console.log(req.method);
@@ -12,7 +12,7 @@ const getExercises = async (req, res, next) => {
     }
 };
 
-const newExercises = async (req, res, next) => {
+const newLike = async (req, res, next) => {
     try {
         res.send({
             status: 'error',
@@ -23,17 +23,13 @@ const newExercises = async (req, res, next) => {
     }
 };
 
-const putExercises = async (req, res, next) => {
-    
-};
 
-const deleteExercises = async (req, res, next) => {
+const deleteLike = async (req, res, next) => {
     
 };
 
 module.exports = {
-    getExercises,
-    newExercises,
-    putExercises,
-    deleteExercises,
+    getLike,
+    newLike,
+    deleteLike,
 };

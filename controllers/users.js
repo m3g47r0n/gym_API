@@ -1,4 +1,4 @@
-const newUserController = async (req, res, next) => {
+const newUser = async (req, res, next) => {
     try {
         res.send({
             status: 'error',
@@ -9,7 +9,7 @@ const newUserController = async (req, res, next) => {
     }
 };
 
-const getUserController = async (req, res, next) => {
+const getUser = async (req, res, next) => {
     try {
         console.log(req.url);
         console.log(req.method);
@@ -23,7 +23,7 @@ const getUserController = async (req, res, next) => {
     }
 };
 
-const loginController = async (req, res, next) => {
+const login = async (req, res, next) => {
     try {
         res.send({
             status: 'error',
@@ -36,7 +36,7 @@ const loginController = async (req, res, next) => {
 };
 
 module.exports = {
-    newUserController,
-    getUserController,
-    loginController,
+    newUser,
+    getUser,
+    login,
 };
