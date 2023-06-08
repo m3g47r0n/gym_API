@@ -1,4 +1,5 @@
 require('dotenv').config();
+const bcrypt = require('bcrypt');
 
 const { getConnection } = require('./db');
 
@@ -20,48 +21,40 @@ async function dbConnection() {
 
         await connection.query(`
             CREATE TABLE IF NOT EXISTS users (
-            id CHAR(30) PRIMARY KEY,
-            name VARCHAR(50) NOT NULL,
+            id INTEGER PRIMARY KEY AUTO_INCREMENT,
             email VARCHAR(50) UNIQUE NOT NULL,
-            password VARCHAR(50) NOT NULL,
-            admin BOOL DEFAULT false
+            password VARCHAR(150) NOT NULL,
+            admin BOOL DEFAULT false,
+            createdAt DATETIME NOT NULL
             );
         `);
-
-/*
-        await connection.query(`
-        CREATE TABLE IF NOT EXISTS admin_app (
-            id SMALLINT AUTO_INCREMENT PRIMARY KEY,
-            name VARCHAR(50) NOT NULL,
-            email VARCHAR(50) UNIQUE NOT NULL,
-            password VARCHAR(50) NOT NULL,
-            admin_app BOOL DEFAULT true
-            );
-        `);
-*/
 
         await connection.query(`
         CREATE TABLE IF NOT EXISTS muscleGroup (
-            id CHAR(30) PRIMARY KEY,
-            name VARCHAR(50)
+            id INTEGER PRIMARY KEY AUTO_INCREMENT,
+            name VARCHAR(50),
+            createdAt DATETIME NOT NULL
             );
         `);
 
         await connection.query(`
         CREATE TABLE IF NOT EXISTS goals (
-            id CHAR(30) PRIMARY KEY,
-            name VARCHAR(50)
+            id INTEGER PRIMARY KEY AUTO_INCREMENT,
+            name VARCHAR(50),
+            createdAt DATETIME NOT NULL
             );
         `);
 
         await connection.query(`
         CREATE TABLE IF NOT EXISTS exercises (
-            id CHAR(30) PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTO_INCREMENT,
             name VARCHAR(50) NOT NULL,
             description VARCHAR(140) NOT NULL,
             picture VARCHAR(300) NOT NULL,
-            goalsId VARCHAR(50) NOT NULL,
-            muscleGroupId VARCHAR(50) NOT NULL,
+            goalsId INTEGER NOT NULL,
+            muscleGroupId INTEGER NOT NULL,
+            createdAt DATETIME NOT NULL,
+            modifiedAt DATETIME,
             FOREIGN KEY (goalsId) REFERENCES goals(id),
             FOREIGN KEY (muscleGroupId) REFERENCES muscleGroup(id)
             );
@@ -69,32 +62,44 @@ async function dbConnection() {
 
         await connection.query(`
         CREATE TABLE IF NOT EXISTS workouts (
-            id CHAR(30) PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTO_INCREMENT,
             name VARCHAR(50) NOT NULL,
             description VARCHAR(140) NOT NULL,
-            goalsId VARCHAR(50) NOT NULL,
-            muscleGroupId VARCHAR(50) NOT NULL,
+            goalsId INTEGER NOT NULL,
+            muscleGroupId INTEGER NOT NULL,
+            createdAt DATETIME NOT NULL,
             FOREIGN KEY (goalsId) REFERENCES goals(id),
             FOREIGN KEY (muscleGroupId) REFERENCES muscleGroup(id)
             );
         `);
 
         await connection.query(`
-        CREATE TABLE IF NOT EXISTS exercisesLikes (
-            id CHAR(30) PRIMARY KEY,
-            exercisesId CHAR(36) NOT NULL,
+        CREATE TABLE IF NOT EXISTS likes (
+            id INTEGER PRIMARY KEY AUTO_INCREMENT,
+            exercisesId INTEGER NOT NULL,
+            createdAt DATETIME NOT NULL,
             FOREIGN KEY (exercisesId) REFERENCES exercises(id) ON DELETE CASCADE
             );
         `);
 
         await connection.query(`
         CREATE TABLE IF NOT EXISTS favourites (
-            id CHAR(30) PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTO_INCREMENT,
             name VARCHAR(50),
-            exercises_id VARCHAR(50),
-            createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            exercisesId INTEGER NOT NULL,
+            createdAt DATETIME NOT NULL,
+            FOREIGN KEY (exercisesId) REFERENCES exercises(id) ON DELETE CASCADE
             );
         `);
+
+        //Encriptamos la contraseña del administrador
+        const hashedPass = await bcrypt.hash('0010', 10);
+
+        // Insertamos el usuario administrador
+        await connection.query(`
+        INSERT INTO users (email, password, admin, createdAt) VALUES ("admin@admin.com", "${hashedPass}", true, ?)
+        `, [new Date()]
+        );
 
 
     } catch (error) {
