@@ -1,4 +1,5 @@
 const getLike = async (req, res, next) => {
+
     try {
         console.log(req.url);
         console.log(req.method);
@@ -7,17 +8,20 @@ const getLike = async (req, res, next) => {
             status: 'error',
             message: 'Not implemented'
         });
+
     } catch(error) {
         next(error);
     }
 };
 
 const newLike = async (req, res, next) => {
+
     try {
         res.send({
             status: 'error',
             message: 'Not implemented'
         });
+
     } catch(error) {
         next(error);
     }
@@ -25,6 +29,7 @@ const newLike = async (req, res, next) => {
 
 
 const deleteLike = async (req, res, next) => {
+    
     try {
         res.send({
             status: 'error',

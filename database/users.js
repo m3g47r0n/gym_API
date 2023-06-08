@@ -5,6 +5,7 @@ const { getConnection } = require('./db')
 // Crea un usuario en la base de datos y devuelve su id
 const createUser = async (email, password) => {
     let connection;
+
     try {
         connection = await getConnection();
         const [user] = await connection.query(`
@@ -33,9 +34,10 @@ const createUser = async (email, password) => {
     }
 };
 
-// Devuelve info de user por su id
+// Devuelve información del usuario por su id
 const getUserById = async (id) => {
     let connection;
+
     try {
         connection = await getConnection();
         const [result] = await connection.query(`
@@ -53,8 +55,7 @@ const getUserById = async (id) => {
     }
 };
 
-// Ingreso de usuario
-
+// Ingreso de usuario por email
 const getUserbyEmail = async (email) => {
     let connection;
 
@@ -74,7 +75,6 @@ const getUserbyEmail = async (email) => {
         if (connection) connection.release();
     }
 };
-
 
 module.exports = {
         createUser,

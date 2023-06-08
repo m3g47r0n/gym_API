@@ -3,7 +3,9 @@ const jwt = require('jsonwebtoken')
 const { generateError } = require('../helpers.js')
 const { createUser, getUserById, getUserbyEmail } = require('../database/users.js')
 
+//Ingreso de el nuevo usuario
 const newUser = async (req, res, next) => {
+
     try {
         const { email, password } = req.body;
 
@@ -23,7 +25,9 @@ const newUser = async (req, res, next) => {
     }
 };
 
+//Información de usuario
 const getUser = async (req, res, next) => {
+
     try {
         const { id } = req.params;
         const user = await getUserById(id);
@@ -37,8 +41,9 @@ const getUser = async (req, res, next) => {
     }
 };
 
-
+//Ingreso de usuario existente
 const login = async (req, res, next) => {
+    
     try {
         const { email , password } = req.body;
 
@@ -70,21 +75,8 @@ const login = async (req, res, next) => {
     }
 };
 
-const modifyUser = async (req, res, next) => {
-    try {
-        res.send({
-            status: 'error',
-            message: 'Not implemented'
-        });
-
-    } catch(error) {
-        next(error);
-    }
-};
-
 module.exports = {
     newUser,
     getUser,
     login,
-    modifyUser
 };

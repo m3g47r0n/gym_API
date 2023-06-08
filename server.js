@@ -7,7 +7,6 @@ const {
     newUser,
     getUser,
     login,
-    modifyUser
 } = require('./controllers/users');
 
 const {
@@ -20,7 +19,6 @@ const {
 const {
     getWorkouts,
     newWorkout,
-    modifyWorkout,
     deleteWorkout
 } = require('./controllers/workouts');
 
@@ -48,7 +46,6 @@ app.use(morgan('dev'));
 app.post('/user', newUser);
 app.get('/user/:id', getUser);
 app.post('/login', login);
-app.put('/user/:id', modifyUser)
 
 //Rutas de exercises
 app.get('/exercises/:id', getExercises);
@@ -59,7 +56,6 @@ app.delete('/exercises/:id', deleteExercises);
 //Ruta de workouts
 app.get('/workouts', getWorkouts);
 app.post('/', newWorkout)
-app.put('/' , modifyWorkout);
 app.delete('/', deleteWorkout);
 
 
