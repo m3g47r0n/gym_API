@@ -7,12 +7,12 @@ async function dbConnection() {
     let connection;
 
     try {
+
         connection = await getConnection();
 
-        //Borrando base de datos existente
         console.log("Borrando base de datos si existe...");
         await connection.query(`DROP DATABASE IF EXISTS gym_API;`);
-        //Creando la base de datos
+
         console.log("Creando base de datos si no existe...");
         await connection.query(`CREATE DATABASE IF NOT EXISTS gym_API;`)
 
@@ -110,9 +110,11 @@ async function dbConnection() {
 
 
     } catch (error) {
+
         console.error(error);
 
     } finally {
+
         if (connection) connection.release();
         process.exit();
     }

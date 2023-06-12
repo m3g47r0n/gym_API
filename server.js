@@ -3,39 +3,29 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 
-const {
-    newUser,
-    getUser,
-    login,
-} = require('./controllers/users');
+const { newUser } = require('./controllers/users/newUser');
+const { getUser } = require('./controllers/users/getUser')
+const { login } = require('./controllers/users/login')
 
-const {
-    getExercises,
-    newExercises,
-    putExercises,
-    deleteExercises,
-} = require('./controllers/exercises');
+const { newExercises } = require('./controllers/exercises/newExercises');
+const { getExercises } = require('./controllers/exercises/getExercises');
+const { deleteExercises } = require('./controllers/exercises/deleteExercises');
 
-const {
-    getWorkouts,
-    newWorkout,
-    deleteWorkout
-} = require('./controllers/workouts');
+const { newWorkout } = require('./controllers/workouts/newWorkout');
+const { getWorkout } = require('./controllers/workouts/getWorkout');
+const { modifyWorkout } = require('./controllers/workouts/modifyWorkout');
+const { deleteWorkout } = require('./controllers/workouts/deleteWorkout');
 
-const {
-    getLike,
-    newLike,
-    deleteLike,
-} = require('./controllers/likes');
+const { newLike } = require('./controllers/likes/newLike');
+const { getLike } = require('./controllers/likes/getLike');
+const { deleteLike } = require('./controllers/likes/deleteLike');
 
-const {
-    getFavourite,
-    newFavourite,
-    putFavourite,
-    deleteExerciseInFav,
-    deleteFavourites,
-    newFavouriteExercise,
-} = require('./controllers/favourites');
+const { newFavourite } = require('./controllers/favourites/newFavourite');
+const { newExerciseInFav } = require('./controllers/favourites/newExerciseInFav');
+const { getFavourite } = require('./controllers/favourites/getFavourite');
+const { modifyFavourite } = require('./controllers/favourites/modifyFavourite')
+const { deleteFavourite } = require('./controllers/favourites/deleteFavourite');
+const { deleteExerciseInFav } = require('./controllers/favourites/deleteExerciseInFav');
 
 const app = express();
 
@@ -50,14 +40,13 @@ app.post('/login', login);
 //Rutas de exercises
 app.get('/exercises/:id', getExercises);
 app.post('/exercises', newExercises);
-app.put('/exercises/:id', putExercises);
 app.delete('/exercises/:id', deleteExercises);
 
 //Ruta de workouts
-app.get('/workouts', getWorkouts);
+app.get('/workouts', getWorkout);
 app.post('/', newWorkout)
+app.put('/' , modifyWorkout);
 app.delete('/', deleteWorkout);
-
 
 //Ruta de like
 app.get('/likes', getLike);
@@ -67,10 +56,13 @@ app.delete('/likes/:id', deleteLike);
 //Ruta de favourite
 app.get('/', getFavourite);
 app.post('/', newFavourite);
-app.post('/exercises/:id', newFavouriteExercise);
-app.put('/', putFavourite);
+app.post('/exercises/:id', newExerciseInFav);
+app.put('/', modifyFavourite);
 app.delete('/exercises/:id', deleteExerciseInFav);
-app.delete('/', deleteFavourites);
+app.delete('/', deleteFavourite);
+
+//Rutas de search
+app.get 
 
 //Middleware de 404
 app.use((req, res) => {
