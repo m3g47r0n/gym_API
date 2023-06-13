@@ -3,11 +3,9 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 
-const {
-    newUser,
-    getUser,
-    login,
-} = require('./controllers/users.js');
+const { newUser } = require('./controllers/users/newUser');
+const { getUser } = require('./controllers/users/getUser')
+const { login } = require('./controllers/users/login')
 
 const {newExercises} = require('./controllers/exercises/newExercises.js');
 const {
@@ -17,23 +15,20 @@ const {
 } = require('./controllers/exercises/getExercises.js');
 const {deleteExercises} = require('./controllers/exercises/deleteExercises.js');
 
-const {
-    getWorkouts,
-} = require('./controllers/workouts.js');
+const { newWorkout } = require('./controllers/workouts/newWorkout');
+const { getWorkout } = require('./controllers/workouts/getWorkout');
+const { modifyWorkout } = require('./controllers/workouts/modifyWorkout');
+const { deleteWorkout } = require('./controllers/workouts/deleteWorkout');
 
-const {
-    getLike,
-    likeDislike,
-} = require('./controllers/likes.js');
+const { likeDislike } = require('./controllers/likes/likeDislike');
+const { getLikes} = require('./controllers/likes/getLikes');
 
-const {
-    getFavourite,
-    newFavourite,
-    putFavourite,
-    deleteExerciseInFavourite,
-    deleteFavourites,
-    newFavouriteExercise,
-} = require('./controllers/favourites.js');
+const { newFavourite } = require('./controllers/favourites/newFavourite');
+const { newExerciseInFav } = require('./controllers/favourites/newExerciseInFav');
+const { getFavourite } = require('./controllers/favourites/getFavourite');
+const { modifyFavourite } = require('./controllers/favourites/modifyFavourite')
+const { deleteFavourite } = require('./controllers/favourites/deleteFavourite');
+const { deleteExerciseInFav } = require('./controllers/favourites/deleteExerciseInFav');
 
 const app = express();
 
@@ -53,21 +48,25 @@ app.post('/exercises', newExercises);
 app.delete('/exercises/:id', deleteExercises);
 
 //Ruta de workouts
-app.get('/', getWorkouts);
+app.get('/workouts', getWorkout);
+app.post('/', newWorkout)
+app.put('/' , modifyWorkout);
+app.delete('/', deleteWorkout);
 
 //Ruta de like
-app.get('/like', getLike);
-app.post('/like/:idExercises', likeDislike);
+app.get('/like', getLikes);
+app.post('/like/:id', likeDislike);
 
 //Ruta de favourite
 app.get('/', getFavourite);
 app.post('/', newFavourite);
-app.put('/', putFavourite);
-app.delete('/exercises/:id', deleteExerciseInFavourite);
-app.delete('/', deleteFavourites);
-app.post('/exercises/:id', newFavouriteExercise);
+app.post('/exercises/:id', newExerciseInFav);
+app.put('/', modifyFavourite);
+app.delete('/exercises/:id', deleteExerciseInFav);
+app.delete('/', deleteFavourite);
 
-
+//Rutas de search
+app.get 
 
 //Middleware de 404
 app.use((req, res) => {
