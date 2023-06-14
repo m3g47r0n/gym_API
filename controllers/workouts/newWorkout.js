@@ -27,6 +27,10 @@ const addWorkout = async (name, description, goalsId, muscleGroupId) => {
             throw generateError('Lo siento, ya existe un entrenamiento con el mismo nombre :(', 409)
         }
 
+        if (muscleGroupId < 0) {
+            throw generateError('Introduzca un grupo muscular válido, por favor.', 400);
+        }
+
         const [newWorkouts] = await connection.query(`
         INSERT INTO workouts (name, description, goalsId, muscleGroupId, createdAt) VALUES (?, ?, ?, ?, ?)
         `, [name, description, goalsId, muscleGroupId, new Date()]

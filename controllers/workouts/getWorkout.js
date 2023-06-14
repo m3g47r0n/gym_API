@@ -1,41 +1,36 @@
 const { getConnection } = require('../../database/db');
 const { generateError } = require('../../helpers');
 
-const getWorkout = async (req, res, next) => {
+const getWorkoutById = async (id) => {
     let connection;
-
     try {
         connection = await getConnection();
-
-        const { workoutId } = req.params;
-        console.log(workoutId)
-
-        const [workout] = await connection.query(
-            `SELECT * FROM workouts where id = ?`,
-            [workoutId]
+        const [workouts] = await connection.query(`
+        SELECT id, name, description FROM workouts WHERE id = ?
+        `, [id], 
         );
 
         // Comprueba si el entrenamiento existe en la base de datos.
-        if (workout.length < 1) {
+        if (workouts.length != id) {
             throw generateError('Lo siento, el entrenamiento no existe :(', 404);
         }
-        // Crea un objeto con los datos del entrenamiento.
-        const workoutInf = {
-            id: workout[0].id,
-            name: workout[0].name,
-            description: workout[0].description,
-            goals: workout[0].goalsId,
-            picture: workout[0].picture
-        };
 
-        res.send({
-            status: 'Ok',
-            data: workoutInf,
-        });
-    } catch (error) {
-        next(error);
+        return workouts[0];
     } finally {
         if (connection) connection.release();
+    }
+};
+
+const getWorkout = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const workout = await getWorkoutById(id);
+        res.send({
+            status: 'Ok',
+            data: workout,
+        });
+    } catch (error) {
+        next(error)
     }
 };
 
