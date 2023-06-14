@@ -59,7 +59,5 @@ async function deletePicture(pictureName) {
 }
 
 module.exports = {
-    generateError,
-    savePicture,
-    deletePicture
+    generateError
 };

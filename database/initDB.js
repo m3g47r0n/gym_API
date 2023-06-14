@@ -82,6 +82,7 @@ async function dbConnection() {
         CREATE TABLE IF NOT EXISTS likes (
             id INTEGER PRIMARY KEY AUTO_INCREMENT,
             exercisesId INTEGER NOT NULL,
+            createdAt DATETIME NOT NULL,
             FOREIGN KEY (exercisesId) REFERENCES exercises(id) ON DELETE CASCADE
             );
         `);
