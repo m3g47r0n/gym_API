@@ -45,6 +45,7 @@ async function savePicture(picture) {
 
 // Elimina la foto.
 async function deletePicture(pictureName) {
+
     try {
         let picturePath;
 
@@ -58,7 +59,9 @@ async function deletePicture(pictureName) {
 }
 
 module.exports = {
+
     generateError,
     savePicture,
     deletePicture
+
 };

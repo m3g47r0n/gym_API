@@ -44,6 +44,15 @@ app.delete('/', deleteWorkout);
 app.get('/likes', getLikes);
 app.post('/likes', likeDislike);
 
+//Ruta de favourite
+app.get('/', getFavourite);
+app.post('/', newFavourite);
+app.post('/exercises/:id', newExerciseInFav);
+app.put('/', modifyFavourite);
+app.delete('/exercises/:id', deleteExerciseInFav);
+app.delete('/', deleteFavourite);
+
+
 //Rutas de search
 app.get 
 

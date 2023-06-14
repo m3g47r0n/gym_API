@@ -94,8 +94,10 @@ const getListMuscleGroup = async (req, res, next) => {
         next(error);
     } finally {
         if (connection) connection.release();
+
     }
 };
+
 
 module.exports = {
     getExercises,

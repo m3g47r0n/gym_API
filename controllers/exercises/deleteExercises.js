@@ -3,12 +3,14 @@ const { generateError, deletePicture } = require('../../helpers');
 
 const deleteExercises = async (req, res, next) => {
     let connection;
+
     try {
         connection = await db();
 
         const { exerciseId } = req.params;
 
         // Comprueba que el ejercicio existe.
+
         const [exercise] = await connection.query(`
         SELECT * FROM exercises WHERE id = ?
         `, [exerciseId]
@@ -23,10 +25,16 @@ const deleteExercises = async (req, res, next) => {
 
         // Elimina el ejercicio.
 
+
         await connection.query(`
         DELETE FROM exercises WHERE id = ?
         `, [exerciseId]
         );
+
+        await connection.query(`DELETE FROM exercises WHERE id = ?`, [
+            exerciseId,
+        ]);
+
 
         res.send({
             status: 'Ok',
