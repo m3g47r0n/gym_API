@@ -1,40 +1,12 @@
-const db = require('../../database/db');
-const { generateError, savePicture, validate } = require('../../helpers');
-const newExerciseR = require('../../required/newExerciseR');
+const { getConnection } = require('../../database/db');
+const { generateError } = require('../../helpers');
 
-const newExercises = async (req, res, next) => {
+const addExercises = async (name, description, picture, goalsId, muscleGroupId) => {
     let connection;
-
     try {
-        connection = await db();
-        
-        const idUser = req.userAuth.id
+        connection = await getConnection();
 
-        // Obtiene los datos requeridos.
-        const { name, description, goalsId, muscleGroupId } = req.body;
-
-        if (!idUser || !name || !description || !goalsId || !muscleGroupId) {
-            throw generateError('Faltan campos obligatorios.', 400);
-        }
-
-        //Valida los datos requeridos.
-        await validate(newExerciseR, req.body)
-
-        if (name.length < 2){
-            throw generateError(
-                'Introduzca un nombre con más de 2 caracteres, por favor.',
-                400
-            );
-        }
-
-        if (description.length < 10) {
-            throw generateError(
-                'Sea más específico, por favor. La descripción debe contener al menos 10 caracteres.',
-                400
-            );
-        }
-
-        if (!req.files || !req.files.picture) {
+       /* if (!req.files || !req.files.picture) {
             throw generateError(
                 'Indique una foto, por favor.',
                 400
@@ -43,6 +15,8 @@ const newExercises = async (req, res, next) => {
 
         const pictureName = await savePicture(req.files.picture);
         console.log(pictureName)
+
+        */
 
         const [exercise] = await connection.query(
             `SELECT * FROM exercises WHERE name = ?`,
@@ -56,23 +30,40 @@ const newExercises = async (req, res, next) => {
             );
         }
 
-        await connection.query(
-            `INSERT INTO exercises (userId, name, description, goalsId, muscleGropuId, picture)
-    VALUES (?, ?, ?, ?, ?, ?)`,
-            [idUser, name, description, goalsId, muscleGroupId, pictureName]
+        const [newExercise] = await connection.query(
+            `INSERT INTO exercises (name, description, picture, goalsId, muscleGroupId, createdAt) VALUES (?, ?, ?, ?, ?, ?)`,
+            [name, description, picture, goalsId, muscleGroupId, new Date()]
         );
 
+        return newExercise.insertId;
+    } finally {
+        if (connection) connection.release();
+    }
+};
+
+const newExercises = async (req, res, next) => {
+    let connection;
+
+    try {
+        const { name, description, picture, goalsId, muscleGroupId } = req.body;
+
+        if (!name || !description || !picture || !goalsId || !muscleGroupId) {
+            throw generateError('Introduce todos los campos', 400);
+        }
+
+        const id = await addExercises(name, description, goalsId, muscleGroupId);
+
         res.send({
-            status: 'Ok',
-            message: '¡Eureka! El ejercicio ha sido creado',
+            status: 'ok',
+            message: `Ejercicio creado con id: ${id}`
         });
+
     } catch (error) {
         next(error);
     } finally {
         if (connection) connection.release();
     }
 };
-
 
 module.exports = {
     newExercises,

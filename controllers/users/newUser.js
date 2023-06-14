@@ -7,7 +7,7 @@ const createUser = async (email, password) => {
     let connection;
     try {
         connection = await getConnection();
-        const [user] = await connection.query(`
+        const [ user ] = await connection.query(`
         SELECT id FROM users WHERE email = ?
         `, [email]
         );

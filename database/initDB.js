@@ -56,7 +56,7 @@ async function dbConnection() {
             picture VARCHAR(300) NOT NULL,
             goalsId INTEGER NOT NULL,
             muscleGroupId INTEGER NOT NULL,
-            createdAt DATETIME NOT NULL
+            createdAt DATETIME NOT NULL,
             FOREIGN KEY (goalsId) REFERENCES goals(id),
             FOREIGN KEY (muscleGroupId) REFERENCES muscleGroup(id)
             );
@@ -82,20 +82,6 @@ async function dbConnection() {
         CREATE TABLE IF NOT EXISTS likes (
             id INTEGER PRIMARY KEY AUTO_INCREMENT,
             exercisesId INTEGER NOT NULL,
-            createdAt DATETIME NOT NULL,
-            FOREIGN KEY (exercisesId) REFERENCES exercises(id) ON DELETE CASCADE
-            );
-        `);
-
-        //Tabla de favoritos
-        await connection.query(`
-        CREATE TABLE IF NOT EXISTS favourites (
-            id INTEGER PRIMARY KEY AUTO_INCREMENT,
-            name VARCHAR(50),
-            exercisesId INTEGER NOT NULL,
-            createdAt DATETIME NOT NULL,
-            modifiedAt DATETIME,
-
             FOREIGN KEY (exercisesId) REFERENCES exercises(id) ON DELETE CASCADE
             );
         `);

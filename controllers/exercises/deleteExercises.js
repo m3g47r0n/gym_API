@@ -1,16 +1,15 @@
-const db = require('../../database/db');
+const { getConnection } = require('../../database/db');
 const { generateError, deletePicture } = require('../../helpers');
 
 const deleteExercises = async (req, res, next) => {
     let connection;
 
     try {
-        connection = await db();
+        connection = await getConnection();
 
         const { exerciseId } = req.params;
 
         // Comprueba que el ejercicio existe.
-
         const [exercise] = await connection.query(`
         SELECT * FROM exercises WHERE id = ?
         `, [exerciseId]
@@ -24,22 +23,16 @@ const deleteExercises = async (req, res, next) => {
         await deletePicture(pictureName);
 
         // Elimina el ejercicio.
-
-
         await connection.query(`
         DELETE FROM exercises WHERE id = ?
         `, [exerciseId]
         );
 
-        await connection.query(`DELETE FROM exercises WHERE id = ?`, [
-            exerciseId,
-        ]);
-
-
         res.send({
             status: 'Ok',
             message: '¡Voilà, el ejercicio ha sido eliminado!',
         });
+
     } catch (error) {
         next(error);
     } finally {
@@ -48,5 +41,5 @@ const deleteExercises = async (req, res, next) => {
 };
 
 module.exports = {
-    deleteExercises,
+    deleteExercises
 };

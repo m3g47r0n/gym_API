@@ -38,6 +38,16 @@ const newExerciseR = joi.object().keys({
         }
     }),
 
+    GoalsID: joi.string()
+    .required()
+    .error((errors)=>{
+        if(
+            errors[0].code === 'any.required' || errors[0].code === 'string.empty'
+        ) {
+            return new Error ('Es necesario especificar el goal')
+        }
+    }),
+
     picture: joi.string()
 
 

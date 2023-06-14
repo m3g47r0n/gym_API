@@ -1,11 +1,11 @@
-const db = require('../../database/db');
+const { getConnection } = require('../../database/db');
 const { generateError } = require('../../helpers');
 
 const getExercises = async (req, res, next) => {
     let connection;
 
     try {
-        connection = await db();
+        connection = await getConnection();
 
         const { exerciseId } = req.params;
         console.log(exerciseId)
@@ -35,36 +35,6 @@ const getExercises = async (req, res, next) => {
     } catch (error) {
         next(error);
     } 
-};
-
-//Objetivos
-const getListGoals = async (req, res, next) => {
-    let connection;
-
-    try {
-        connection = await db();
-
-        const { goals } = req.params;
-        console.log(goals)
-
-        const [listGoals] = await connection.query(
-            `SELECT e.name, e.id, e.goalsId, COUNT(f.id) AS n_favourites FROM favourites f RIGHT JOIN exercises e ON e.id=f.exercisesId WHERE goalsId = ? GROUP BY e.id ORDER BY n_favourites DESC;`,
-            [goals]
-        );
-
-        if (listGoals.length < 1) {
-            throw generateError('Lo siento, no hay ejercicios para el objetivo seleccionado :(', 404);
-        }
-
-        res.send({
-            status: 'Ok',
-            data: listGoals,
-        });
-    } catch (error) {
-        next(error);
-    } finally {
-        if (connection) connection.release();
-    }
 };
 
 //grupo de músculos

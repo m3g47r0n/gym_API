@@ -1,10 +1,10 @@
-const db = require('../../database/db');
+const { getConnection } = require('../../database/db');
 
 const getLikes = async (req, res, next) => {
     let connection;
 
     try {
-        connection = await db();
+        connection = await getConnection();
 
         const idUser = req.userAuth.id;
 
@@ -25,7 +25,6 @@ const getLikes = async (req, res, next) => {
 
     } finally {
         if (connection) connection.release();
-
     }
 
 };

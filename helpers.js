@@ -25,7 +25,6 @@ const pictureDir = path.join(__dirname, '/img');
 
 //Guarda la foto.
 async function savePicture(picture) {
-
     try {
         const sharpPicture = sharp(picture.data);
 
@@ -45,7 +44,6 @@ async function savePicture(picture) {
 
 // Elimina la foto.
 async function deletePicture(pictureName) {
-
     try {
         let picturePath;
 
@@ -59,9 +57,8 @@ async function deletePicture(pictureName) {
 }
 
 module.exports = {
-
     generateError,
     savePicture,
-    deletePicture
-
+    deletePicture,
+    uuid
 };
