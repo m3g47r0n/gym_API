@@ -1,6 +1,5 @@
 const { getConnection } = require('../../database/db');
 
-
 //Añadimos función like/dislike.
 const likeDislike = async (req, res, next) => {
     let connection;
@@ -53,6 +52,7 @@ const likeDislike = async (req, res, next) => {
         
     } catch (error) {
         next(error);
+
     } finally {
         if (connection) connection.release();
     }

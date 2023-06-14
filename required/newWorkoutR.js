@@ -38,6 +38,7 @@ const newWorkoutR = joi.object().keys({
         }
     }),
 
+
     GoalsID: joi.string()
     .required()
     .error((errors)=>{
@@ -47,6 +48,7 @@ const newWorkoutR = joi.object().keys({
             return new Error ('Es necesario especificar el goal')
         }
     })
+
 });
 
 module.exports = {

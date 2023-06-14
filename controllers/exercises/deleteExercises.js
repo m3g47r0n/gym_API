@@ -3,6 +3,7 @@ const { generateError, deletePicture } = require('../../helpers');
 
 const deleteExercises = async (req, res, next) => {
     let connection;
+
     try {
         connection = await getConnection();
 

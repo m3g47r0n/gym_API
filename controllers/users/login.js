@@ -28,6 +28,7 @@ const login = async (req, res, next) => {
         const { email , password } = req.body;
 
         if (!email || !password) {
+
             throw generateError('Envia tu email y password', 400)
         }
 
