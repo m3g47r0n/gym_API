@@ -4,8 +4,14 @@ const express = require('express');
 const morgan = require('morgan');
 
 const { newUser } = require('./controllers/users/newUser');
-const { getUser } = require('./controllers/users/getUser')
-const { login } = require('./controllers/users/login')
+const { getUser } = require('./controllers/users/getUser');
+const { login } = require('./controllers/users/login');
+
+const { newGoal } = require('./controllers/goals/addGoals');
+const { getListGoals } = require('./controllers/goals/getGoalsExercises');
+
+const { newMuscleGroup } = require('./controllers/muscleGroup/addMuscleGroup');
+const { getListMuscleGroup} = require('./controllers/muscleGroup/getMuscleExercises');
 
 const { newExercises } = require('./controllers/exercises/newExercises');
 const { getExercises } = require('./controllers/exercises/getExercises');
@@ -16,16 +22,8 @@ const { getWorkout } = require('./controllers/workouts/getWorkout');
 const { modifyWorkout } = require('./controllers/workouts/modifyWorkout');
 const { deleteWorkout } = require('./controllers/workouts/deleteWorkout');
 
-const { newLike } = require('./controllers/likes/newLike');
-const { getLike } = require('./controllers/likes/getLike');
-const { deleteLike } = require('./controllers/likes/deleteLike');
-
-const { newFavourite } = require('./controllers/favourites/newFavourite');
-const { newExerciseInFav } = require('./controllers/favourites/newExerciseInFav');
-const { getFavourite } = require('./controllers/favourites/getFavourite');
-const { modifyFavourite } = require('./controllers/favourites/modifyFavourite')
-const { deleteFavourite } = require('./controllers/favourites/deleteFavourite');
-const { deleteExerciseInFav } = require('./controllers/favourites/deleteExerciseInFav');
+const { likeDislike } = require('./controllers/likes/likeDislike');
+const { getLikes } = require('./controllers/likes/getLike');
 
 const app = express();
 
@@ -37,6 +35,14 @@ app.post('/user', newUser);
 app.get('/user/:id', getUser);
 app.post('/login', login);
 
+//Rutas de goals
+app.post('/goals', newGoal);
+app.get('/goals/:id', getListGoals);
+
+//Rutas de muscleGroup
+app.post('/muscleGroup', newMuscleGroup);
+app.get('/muscleGroup/:id',getListMuscleGroup);
+
 //Rutas de exercises
 app.get('/exercises/:id', getExercises);
 app.post('/exercises', newExercises);
@@ -44,25 +50,13 @@ app.delete('/exercises/:id', deleteExercises);
 
 //Ruta de workouts
 app.get('/workouts', getWorkout);
-app.post('/', newWorkout)
-app.put('/' , modifyWorkout);
-app.delete('/', deleteWorkout);
+app.post('/workouts', newWorkout)
+app.put('/workouts' , modifyWorkout);
+app.delete('/workouts', deleteWorkout);
 
 //Ruta de like
-app.get('/likes', getLike);
-app.post('/likes', newLike);
-app.delete('/likes/:id', deleteLike);
-
-//Ruta de favourite
-app.get('/', getFavourite);
-app.post('/', newFavourite);
-app.post('/exercises/:id', newExerciseInFav);
-app.put('/', modifyFavourite);
-app.delete('/exercises/:id', deleteExerciseInFav);
-app.delete('/', deleteFavourite);
-
-//Rutas de search
-app.get 
+app.get('/likes', getLikes);
+app.post('/likes', likeDislike);
 
 //Middleware de 404
 app.use((req, res) => {
