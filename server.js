@@ -16,16 +16,8 @@ const { getWorkout } = require('./controllers/workouts/getWorkout');
 const { modifyWorkout } = require('./controllers/workouts/modifyWorkout');
 const { deleteWorkout } = require('./controllers/workouts/deleteWorkout');
 
-const { newLike } = require('./controllers/likes/newLike');
-const { getLike } = require('./controllers/likes/getLike');
-const { deleteLike } = require('./controllers/likes/deleteLike');
-
-const { newFavourite } = require('./controllers/favourites/newFavourite');
-const { newExerciseInFav } = require('./controllers/favourites/newExerciseInFav');
-const { getFavourite } = require('./controllers/favourites/getFavourite');
-const { modifyFavourite } = require('./controllers/favourites/modifyFavourite')
-const { deleteFavourite } = require('./controllers/favourites/deleteFavourite');
-const { deleteExerciseInFav } = require('./controllers/favourites/deleteExerciseInFav');
+const { likeDislike } = require('./controllers/likes/likeDislike');
+const { getLikes } = require('./controllers/likes/getLike');
 
 const app = express();
 
@@ -49,9 +41,9 @@ app.put('/' , modifyWorkout);
 app.delete('/', deleteWorkout);
 
 //Ruta de like
-app.get('/likes', getLike);
-app.post('/likes', newLike);
-app.delete('/likes/:id', deleteLike);
+
+app.get('/likes', getLikes);
+app.post('/likes', likeDislike);
 
 //Ruta de favourite
 app.get('/', getFavourite);

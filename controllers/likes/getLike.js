@@ -1,17 +1,32 @@
-const getLike = async (req, res, next) => {
+const db = require('../../database/db');
+
+const getLikes = async (req, res, next) => {
+    let connection;
+
     try {
-        console.log(req.url);
-        console.log(req.method);
-        console.log(req.body);
+        connection = await db();
+
+        const idUser = req.userAuth.id;
+
+
+        const [likesExercise] = await connection.query (
+            `SELECT exercisesId FROM likes WHERE userId = ?`, [idUser]
+        )
+
+        const resLikes = likesExercise.map(x => x.exercisesId);
+
         res.send({
-            status: 'error',
-            message: 'Not implemented'
-        });
-    } catch(error) {
+            status: 'Ok',
+            data: resLikes
+        })   
+
+    } catch (error) {
         next(error);
-    }
+
+    } finally {
+        if (connection) connection.release();
 };
 
 module.exports = {
-    getLike
+    getLikes   
 };

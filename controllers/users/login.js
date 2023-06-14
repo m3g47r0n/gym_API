@@ -6,7 +6,7 @@ const { getConnection } = require('../../database/db');
 // Ingreso de usuario
 const getUserbyEmail = async (email) => {
     let connection;
-
+  
     try {
         connection = await getConnection();
         const [result] = await connection.query(`
