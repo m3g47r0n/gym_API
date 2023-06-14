@@ -1,47 +1,44 @@
-const db = require('../../db/db');
+const db = require('../../database/db');
 const { generateError } = require('../../helpers');
 
-const getWorkout = async (req, res, next) => {
+const getExercises = async (req, res, next) => {
     let connection;
 
     try {
         connection = await db();
 
-        const { workoutId } = req.params;
-        console.log(workoutId)
+        const { exerciseId } = req.params;
+        console.log(exerciseId)
 
-        const [workout] = await connection.query(
-            `SELECT * FROM workouts where id = ?`,
-            [workoutId]
+        const [exercises] = await connection.query(
+            `SELECT * FROM exercises where id = ?`,
+            [exerciseId]
         );
 
-        // Comprueba si el entrenamiento existe en la base de datos.
-        if (workout.length < 1) {
-            throw generateError('Lo siento, el entrenamiento no existe :(', 404);
+        // Comprueba si el ejercicio existe en la base de datos.
+        if (exercises.length < 1) {
+            throw generateError('Lo siento, el ejercicio no existe :(', 404);
         }
-        // Crea un objeto con los datos del entrenamiento.
-        const workoutInf = {
-            id: workout[0].id,
-            name: workout[0].name,
-            description: workout[0].description,
-            goals: workout[0].goalsId,
-            picture: workout[0].picture
+        // Crea un objeto con los datos del ejercicio.
+        const exerciseInf = {
+            id: exercises[0].id,
+            name: exercises[0].name,
+            description: exercises[0].description,
+            goals: exercises[0].goalsId,
+            picture: exercises[0].picture
         };
 
         res.send({
             status: 'Ok',
-            data: workoutInf,
+            data: exerciseInf,
         });
     } catch (error) {
         next(error);
-    } finally {
-        if (connection) connection.release();
-    }
+    } 
 };
 
-
 //Objetivos
-const getGoals = async (req, res, next) => {
+const getListGoals = async (req, res, next) => {
     let connection;
 
     try {
@@ -70,9 +67,8 @@ const getGoals = async (req, res, next) => {
     }
 };
 
-
 //grupo de músculos
-const getMuscleGroup = async (req, res, next) => {
+const getListMuscleGroup = async (req, res, next) => {
     let connection;
 
     try {
@@ -87,7 +83,7 @@ const getMuscleGroup = async (req, res, next) => {
         );
 
         if (listMuscleGroup.length < 1) {
-            throw generateError('Lo siento, el grupo muscular no tiene ningún entrenamiento asignado :(', 404);
+            throw generateError('Lo siento, el grupo muscular no tiene ningún ejercicio asignado :(', 404);
         }
 
         res.send({
@@ -101,9 +97,8 @@ const getMuscleGroup = async (req, res, next) => {
     }
 };
 
-
 module.exports = {
-    getWorkout,
-    getGoals,
-    getMuscleGroup,
+    getExercises,
+    getListGoals,
+    getListMuscleGroup,
 };

@@ -1,8 +1,8 @@
-const db = require('../../db/db');
+const db = require('../../database/db');
 const { generateError, savePicture, validate } = require('../../helpers');
-const newWorkoutR = require('../../required/newWorkoutR');
+const newExerciseR = require('../../required/newExerciseR');
 
-const newWorkout = async (req, res, next) => {
+const newExercises = async (req, res, next) => {
     let connection;
 
     try {
@@ -17,8 +17,8 @@ const newWorkout = async (req, res, next) => {
             throw generateError('Faltan campos obligatorios.', 400);
         }
 
-        //Valida lso datos requeridos.
-        await validate(newWorkoutR, req.body)
+        //Valida los datos requeridos.
+        await validate(newExerciseR, req.body)
 
         if (name.length < 2){
             throw generateError(
@@ -44,27 +44,27 @@ const newWorkout = async (req, res, next) => {
         const pictureName = await savePicture(req.files.picture);
         console.log(pictureName)
 
-        const [workout] = await connection.query(
-            `SELECT * FROM workouts WHERE name = ?`,
+        const [exercise] = await connection.query(
+            `SELECT * FROM exercises WHERE name = ?`,
             [name]
         );
 
-        if (workout.length > 0) {
+        if (exercise.length > 0) {
             throw generateError(
-                'Lo siento, ya existe un entrenamiento con el mismo nombre :(',
+                'Lo siento, ya existe un ejercicio con el mismo nombre :(',
                 409
             );
         }
 
         await connection.query(
-            `INSERT INTO workouts (userId, name, description, goalsId, muscleGropuId, picture)
+            `INSERT INTO exercises (userId, name, description, goalsId, muscleGropuId, picture)
     VALUES (?, ?, ?, ?, ?, ?)`,
             [idUser, name, description, goalsId, muscleGroupId, pictureName]
         );
 
         res.send({
             status: 'Ok',
-            message: 'El entrenamiento ha sido creado',
+            message: '¡Eureka! El ejercicio ha sido creado',
         });
     } catch (error) {
         next(error);
@@ -74,4 +74,6 @@ const newWorkout = async (req, res, next) => {
 };
 
 
-module.exports = newWorkout;
+module.exports = {
+    newExercises,
+};
