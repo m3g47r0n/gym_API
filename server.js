@@ -41,7 +41,6 @@ app.put('/' , modifyWorkout);
 app.delete('/', deleteWorkout);
 
 //Ruta de like
-
 app.get('/likes', getLikes);
 app.post('/likes', likeDislike);
 
@@ -52,6 +51,7 @@ app.post('/exercises/:id', newExerciseInFav);
 app.put('/', modifyFavourite);
 app.delete('/exercises/:id', deleteExerciseInFav);
 app.delete('/', deleteFavourite);
+
 
 //Rutas de search
 app.get 

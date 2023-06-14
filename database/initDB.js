@@ -95,6 +95,7 @@ async function dbConnection() {
             exercisesId INTEGER NOT NULL,
             createdAt DATETIME NOT NULL,
             modifiedAt DATETIME,
+
             FOREIGN KEY (exercisesId) REFERENCES exercises(id) ON DELETE CASCADE
             );
         `);

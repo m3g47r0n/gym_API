@@ -1,5 +1,6 @@
 # gym_API
 
+
 API para la organización de entrenamientos en un gimansio. 
 
 ## Comenzando :computer:
@@ -80,3 +81,4 @@ Escriba *npm run dev* en el terminal.
 * **Eliana** - *La madre de este proyecto. Sin ella, esto no sería lo que es. Ha hecho de todo.* 
 * **Marta** - *Workouts* 
 * **Lykos** - *Exercises and Likes*
+

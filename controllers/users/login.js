@@ -6,7 +6,7 @@ const { getConnection } = require('../../database/db');
 // Ingreso de usuario
 const getUserbyEmail = async (email) => {
     let connection;
-  
+
     try {
         connection = await getConnection();
         const [result] = await connection.query(`
@@ -29,7 +29,9 @@ const login = async (req, res, next) => {
         const { email , password } = req.body;
 
         if (!email || !password) {
-            throw generateError('Envia tu  email y password', 400)
+
+            throw generateError('Envia tu email y password', 400)
+
         }
 
         const user = await getUserbyEmail(email);
