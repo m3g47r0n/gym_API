@@ -17,7 +17,7 @@ const newExercises = async (req, res, next) => {
             throw generateError('Faltan campos obligatorios.', 400);
         }
 
-        //Valida lso datos requeridos.
+        //Valida los datos requeridos.
         await validate(newExerciseR, req.body)
 
         if (name.length < 2){

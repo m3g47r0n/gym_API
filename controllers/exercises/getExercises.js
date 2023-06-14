@@ -37,7 +37,6 @@ const getExercises = async (req, res, next) => {
     } 
 };
 
-
 //Objetivos
 const getListGoals = async (req, res, next) => {
     let connection;
@@ -68,7 +67,6 @@ const getListGoals = async (req, res, next) => {
     }
 };
 
-
 //grupo de músculos
 const getListMuscleGroup = async (req, res, next) => {
     let connection;
@@ -98,7 +96,6 @@ const getListMuscleGroup = async (req, res, next) => {
         if (connection) connection.release();
     }
 };
-
 
 module.exports = {
     getExercises,

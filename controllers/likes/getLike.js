@@ -29,5 +29,5 @@ const getLikes = async (req, res, next) => {
 };
 
 module.exports = {
-    getLikes,    
+    getLikes   
 };

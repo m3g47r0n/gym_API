@@ -13,14 +13,12 @@ const uuid = require('uuid');
 //Da acceso a las variables.
 require('dotenv').config();
 
-
-//Gestión de errores.
+//Gestión de errores
 const generateError = (message, status) => {
     const error = new Error(message);
     error.httpStatus = status;
     return error
 };
-
 
 // Gestión de fotos.
 const pictureDir = path.join(__dirname, '/img');
@@ -59,7 +57,6 @@ async function deletePicture(pictureName) {
         throw new Error('Error al eliminar la imagen del servidor');
     }
 }
-
 
 module.exports = {
     generateError,
