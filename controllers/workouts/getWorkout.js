@@ -4,7 +4,9 @@ const { generateError } = require('../../helpers');
 const getWorkoutById = async (id) => {
     let connection;
     try {
+        //Conexión con la base de datos
         connection = await getConnection();
+        
         const [workouts] = await connection.query(`
         SELECT id, name, description FROM workouts WHERE id = ?
         `, [id], 
@@ -15,6 +17,7 @@ const getWorkoutById = async (id) => {
             throw generateError('Lo siento, el entrenamiento no existe :(', 404);
         }
 
+        // Retornamos el entrenamiento deseado
         return workouts[0];
     } finally {
         if (connection) connection.release();

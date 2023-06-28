@@ -2,7 +2,14 @@ require('dotenv').config();
 
 const express = require('express');
 const morgan = require('morgan');
+const app = express();
 
+app.use(express.json());
+app.use(morgan('dev'));
+
+//const authUser = require("");
+
+//Controladores (controllers)
 const { newUser } = require('./controllers/users/newUser');
 const { getUser } = require('./controllers/users/getUser');
 const { login } = require('./controllers/users/login');
@@ -25,40 +32,56 @@ const { deleteWorkout } = require('./controllers/workouts/deleteWorkout');
 const { likeDislike } = require('./controllers/likes/likeDislike');
 const { getLikes } = require('./controllers/likes/getLike');
 
-const app = express();
-
-app.use(express.json());
-app.use(morgan('dev'));
-
-//Rutas de usuario
+// Rutas
+// Registro de un nuevo usuario
 app.post('/user', newUser);
+
+// Devuelve usuario por su id
 app.get('/user/:id', getUser);
+
+// Ingreso de usuario creado
 app.post('/login', login);
 
-//Rutas de goals
+// Crea un objetivo nuevo
 app.post('/goals', newGoal);
+
+//Devuelve ejercicios con dicho objetivo
 app.get('/goals/:id', getListGoals);
 
-//Rutas de muscleGroup
+//Crea grupo muscular
 app.post('/muscleGroup', newMuscleGroup);
+
+//Devuelve ejercicios con el mismo grupo muscular
 app.get('/muscleGroup/:id',getListMuscleGroup);
 
-//Rutas de exercises
-app.get('/exercises/:id', getExercises);
+// Crea el ejercicio
 app.post('/exercises', newExercises);
+
+// Devuelve ejercicio deseado por su id
+app.get('/exercises/:id', getExercises);
+
+// Elimina ejercicio
 app.delete('/exercises/:id', deleteExercises);
 
-//Ruta de workouts
+// Crea un entrenamiento
+app.post('/workouts', newWorkout);
+
+// Devuelve entrenamiento deseado
 app.get('/workouts', getWorkout);
-app.post('/workouts', newWorkout)
+
+// Modifica entrenamiento
 app.put('/workouts' , modifyWorkout);
+
+// Elimina entrenamiento creado
 app.delete('/workouts', deleteWorkout);
 
-//Ruta de like
+// Devuelve likes de un ejercicio
 app.get('/likes', getLikes);
+
+// Introduce like o borra el mismo si ya existe
 app.post('/likes', likeDislike);
 
-//Middleware de 404
+// Middleware de 404
 app.use((req, res) => {
     res.status(404).send({
         status: 'error',
@@ -66,7 +89,7 @@ app.use((req, res) => {
     });
 });
 
-//Middleware de gestión de errores
+// Middleware de gestión de errores
 app.use((error, req, res, next) => {
     console.error(error);
 
@@ -76,7 +99,7 @@ app.use((error, req, res, next) => {
     });
 });
 
-//Lanzamos el servidor
+// Lanzamos el servidor
 app.listen(3000, () => {
     console.log('Servidor funcionando');
 });

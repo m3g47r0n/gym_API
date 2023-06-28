@@ -4,6 +4,7 @@ const { generateError } = require('../../helpers');
 const createMuscleGroup = async (name) => {
     let connection;
     try {
+        //Conexión con la base de datos
         connection = await getConnection();
 
         if (!name) {

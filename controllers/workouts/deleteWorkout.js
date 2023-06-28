@@ -4,6 +4,7 @@ const { generateError } = require('../../helpers');
 const deleteWorkout = async (req, res, next) => {
     let connection;
     try {
+        //Conexión con la base de datos
         connection = await getConnection();
 
         const { workoutId } = req.params;

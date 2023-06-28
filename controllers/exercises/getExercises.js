@@ -11,7 +11,7 @@ const getExercises = async (req, res, next) => {
         console.log(exerciseId)
 
         const [exercises] = await connection.query(
-            `SELECT * FROM exercises where id = ?`,
+            `SELECT name FROM exercises where id = ?`,
             [exerciseId]
         );
 

@@ -5,7 +5,7 @@ const { MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE } = process.env;
 let pool;
 
 const getConnection = async () => {
-
+    // Creamos conexión si no existe
     if (!pool) {
         pool = mysql.createPool( {
             connectionLimit: 10,
@@ -16,6 +16,7 @@ const getConnection = async () => {
             timezone: "Z"
         });
     }
+    // Y luego la retornamos
     return await pool.getConnection();
 };
 

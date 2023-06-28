@@ -4,6 +4,7 @@ const { generateError } = require('../../helpers');
 const addWorkout = async (name, description, goalsId, muscleGroupId) => {
     let connection;
     try {
+        //Conexión con la base de datos
         connection = await getConnection();
         const [workout] = await connection.query(`
         SELECT * FROM workouts WHERE name = ?

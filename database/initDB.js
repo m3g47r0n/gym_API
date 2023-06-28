@@ -1,13 +1,13 @@
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 
+//Llamada a nuestra función encargada de hacer conexión con la base de datos
 const { getConnection } = require('./db');
 
 async function dbConnection() {
     let connection;
-
     try {
-
+        //Conexión con la base de datoss
         connection = await getConnection();
 
         console.log("Borrando base de datos si existe...");
@@ -38,7 +38,7 @@ async function dbConnection() {
             );
         `);
 
-        //Tabla de tipología
+        //Tabla de objetivos
         await connection.query(`
         CREATE TABLE IF NOT EXISTS goals (
             id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -95,13 +95,9 @@ async function dbConnection() {
         `, [new Date()]
         );
 
-
     } catch (error) {
-
         console.error(error);
-
     } finally {
-
         if (connection) connection.release();
         process.exit();
     }

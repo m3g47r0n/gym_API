@@ -5,6 +5,7 @@ const { getConnection } = require('../../database/db');
 const getUserById = async (id) => {
     let connection;
     try {
+        //Conexión con la base de datos
         connection = await getConnection();
         const [result] = await connection.query(`
         SELECT id, email, createdAt FROM users WHERE id = ?
