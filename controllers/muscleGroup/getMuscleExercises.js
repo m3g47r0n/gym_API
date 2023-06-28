@@ -4,12 +4,11 @@ const { generateError } = require('../../helpers');
 //Grupo de músculos
 const getListMuscleGroup = async (req, res, next) => {
     let connection;
-
     try {
+        //Conexión con la base de datos
         connection = await getConnection();
 
         const { muscleGroup } = req.params;
-        console.log(muscleGroup)
 
         const [listMuscleGroup] = await connection.query(`
         SELECT e.name, e.id, e.muscleGroupId FROM exercises e WHERE muscleGroupId = ?

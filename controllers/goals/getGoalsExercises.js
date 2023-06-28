@@ -4,8 +4,8 @@ const { generateError } = require('../../helpers');
 //Objetivos
 const getListGoals = async (req, res, next) => {
     let connection;
-
     try {
+        //Conexión con la base de datos
         connection = await getConnection();
 
         const { goals } = req.params;

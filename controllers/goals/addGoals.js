@@ -3,6 +3,7 @@ const { generateError } = require('../../helpers');
 
 const createGoal = async (name) => {
     let connection;
+    //Conexión con la base de datos
     try {
         connection = await getConnection();
 

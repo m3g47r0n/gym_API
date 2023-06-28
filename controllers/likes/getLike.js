@@ -2,12 +2,11 @@ const { getConnection } = require('../../database/db');
 
 const getLikes = async (req, res, next) => {
     let connection;
-
     try {
+        //Conexión con la base de datos
         connection = await getConnection();
 
         const idUser = req.userAuth.id;
-
 
         const [likesExercise] = await connection.query (
             `SELECT exercisesId FROM likes WHERE userId = ?`, [idUser]

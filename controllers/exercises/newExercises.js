@@ -4,6 +4,7 @@ const { generateError } = require('../../helpers');
 const addExercises = async (name, description, picture, goalsId, muscleGroupId) => {
     let connection;
     try {
+        //Conexión con la base de datos
         connection = await getConnection();
 
        /* if (!req.files || !req.files.picture) {
@@ -12,10 +13,7 @@ const addExercises = async (name, description, picture, goalsId, muscleGroupId) 
                 400
             );
         }
-
         const pictureName = await savePicture(req.files.picture);
-        console.log(pictureName)
-
         */
 
         const [exercise] = await connection.query(
@@ -30,9 +28,9 @@ const addExercises = async (name, description, picture, goalsId, muscleGroupId) 
             );
         }
 
-        const [newExercise] = await connection.query(
-            `INSERT INTO exercises (name, description, picture, goalsId, muscleGroupId, createdAt) VALUES (?, ?, ?, ?, ?, ?)`,
-            [name, description, picture, goalsId, muscleGroupId, new Date()]
+        const [newExercise] = await connection.query(`
+        INSERT INTO exercises (name, description, picture, goalsId, muscleGroupId, createdAt) VALUES (?, ?, ?, ?, ?, ?)
+        `, [name, description, picture, goalsId, muscleGroupId, new Date()]
         );
 
         return newExercise.insertId;
