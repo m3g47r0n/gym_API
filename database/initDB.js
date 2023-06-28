@@ -1,18 +1,18 @@
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 
+//Llamada a nuestra función encargada de hacer conexión con la base de datos
 const { getConnection } = require('./db');
 
 async function dbConnection() {
     let connection;
-
     try {
+        //Conexión con la base de datoss
         connection = await getConnection();
 
-        //Borrando base de datos existente
         console.log("Borrando base de datos si existe...");
         await connection.query(`DROP DATABASE IF EXISTS gym_API;`);
-        //Creando la base de datos
+
         console.log("Creando base de datos si no existe...");
         await connection.query(`CREATE DATABASE IF NOT EXISTS gym_API;`)
 
@@ -38,7 +38,7 @@ async function dbConnection() {
             );
         `);
 
-        //Tabla de tipología
+        //Tabla de objetivos
         await connection.query(`
         CREATE TABLE IF NOT EXISTS goals (
             id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -56,7 +56,7 @@ async function dbConnection() {
             picture VARCHAR(300) NOT NULL,
             goalsId INTEGER NOT NULL,
             muscleGroupId INTEGER NOT NULL,
-            createdAt DATETIME NOT NULL
+            createdAt DATETIME NOT NULL,
             FOREIGN KEY (goalsId) REFERENCES goals(id),
             FOREIGN KEY (muscleGroupId) REFERENCES muscleGroup(id)
             );
@@ -82,19 +82,6 @@ async function dbConnection() {
         CREATE TABLE IF NOT EXISTS likes (
             id INTEGER PRIMARY KEY AUTO_INCREMENT,
             exercisesId INTEGER NOT NULL,
-            createdAt DATETIME NOT NULL,
-            FOREIGN KEY (exercisesId) REFERENCES exercises(id) ON DELETE CASCADE
-            );
-        `);
-
-        //Tabla de favoritos
-        await connection.query(`
-        CREATE TABLE IF NOT EXISTS favourites (
-            id INTEGER PRIMARY KEY AUTO_INCREMENT,
-            name VARCHAR(50),
-            exercisesId INTEGER NOT NULL,
-            createdAt DATETIME NOT NULL,
-            modifiedAt DATETIME,
             FOREIGN KEY (exercisesId) REFERENCES exercises(id) ON DELETE CASCADE
             );
         `);
@@ -108,10 +95,8 @@ async function dbConnection() {
         `, [new Date()]
         );
 
-
     } catch (error) {
         console.error(error);
-
     } finally {
         if (connection) connection.release();
         process.exit();
