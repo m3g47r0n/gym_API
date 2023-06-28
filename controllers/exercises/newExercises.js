@@ -40,6 +40,8 @@ const addExercises = async (name, description, picture, goalsId, muscleGroupId) 
 };
 
 const newExercises = async (req, res, next) => {
+    let connection;
+
     try {
         const { name, description, picture, goalsId, muscleGroupId } = req.body;
 
@@ -56,6 +58,8 @@ const newExercises = async (req, res, next) => {
 
     } catch (error) {
         next(error);
+    } finally {
+        if (connection) connection.release();
     }
 };
 

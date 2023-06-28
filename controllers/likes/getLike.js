@@ -25,6 +25,7 @@ const getLikes = async (req, res, next) => {
     } finally {
         if (connection) connection.release();
     }
+
 };
 
 module.exports = {

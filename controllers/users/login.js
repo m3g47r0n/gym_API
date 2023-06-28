@@ -34,6 +34,7 @@ const login = async (req, res, next) => {
 
         // Error al introducir datos incompletos
         if (!email || !password) {
+
             throw generateError('Envia tu email y password', 400)
         }
 

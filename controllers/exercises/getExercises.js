@@ -37,6 +37,40 @@ const getExercises = async (req, res, next) => {
     } 
 };
 
+//grupo de músculos
+const getListMuscleGroup = async (req, res, next) => {
+    let connection;
+
+    try {
+        connection = await db();
+
+        const { muscleGroup } = req.params;
+        console.log(muscleGroup)
+
+        const [listMuscleGroup] = await connection.query(
+            `SELECT e.name, e.id, e.muscleGroupId, COUNT(f.id) AS n_favourites FROM favourites f RIGHT JOIN exercises e ON e.id=f.exercisesId WHERE muscleGroupId = ? GROUP BY e.id ORDER BY n_favourites DESC;`,
+            [muscleGroup]
+        );
+
+        if (listMuscleGroup.length < 1) {
+            throw generateError('Lo siento, el grupo muscular no tiene ningún ejercicio asignado :(', 404);
+        }
+
+        res.send({
+            status: 'Ok',
+            data: listMuscleGroup,
+        });
+    } catch (error) {
+        next(error);
+    } finally {
+        if (connection) connection.release();
+
+    }
+};
+
+
 module.exports = {
-    getExercises
+    getExercises,
+    getListGoals,
+    getListMuscleGroup,
 };
