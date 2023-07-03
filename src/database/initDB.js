@@ -34,6 +34,7 @@ async function dbConnection() {
         await connection.query(`
         CREATE TABLE IF NOT EXISTS muscleGroup (
             id INTEGER PRIMARY KEY AUTO_INCREMENT,
+            idUser INTEGER,
             name VARCHAR(50),
             createdAt DATETIME NOT NULL
             );
@@ -52,6 +53,7 @@ async function dbConnection() {
         await connection.query(`
         CREATE TABLE IF NOT EXISTS exercises (
             id INTEGER PRIMARY KEY AUTO_INCREMENT,
+            idUser INTEGER,
             name VARCHAR(50) NOT NULL,
             description VARCHAR(140) NOT NULL,
             picture VARCHAR(300) NOT NULL,

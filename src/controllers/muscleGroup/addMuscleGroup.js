@@ -1,16 +1,20 @@
 const { getConnection } = require('../../database/db');
 const { generateError } = require('../../middleware/helpers');
 
-const createMuscleGroup = async (name) => {
+const createMuscleGroup = async (name, idUser) => {
     let connection;
     try {
         //Conexión con la base de datos
         connection = await getConnection();
 
         const [ muscleGroup ] = await connection.query(`
-        SELECT id FROM muscleGroup WHERE name = ?
-        `, [name]
+        SELECT id FROM muscleGroup WHERE name = ? AND idUser = ?
+        `, [name, idUser]
         );
+
+        if (idUser > 1) {
+            generateError('Usuario no autorizado', 403)
+        }
 
         //Comprueba si el grupo muscular existe
         if (muscleGroup.length > 0) {
@@ -33,9 +37,9 @@ const createMuscleGroup = async (name) => {
 
 const newMuscleGroup = async (req, res, next) => {
     try {
-        const { name } = req.body;
+        const { name, idUser } = req.body;
 
-        const id = await createMuscleGroup(name);
+        const id = await createMuscleGroup(name, idUser);
 
         res.send({
             status: 'ok',

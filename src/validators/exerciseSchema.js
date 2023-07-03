@@ -35,8 +35,7 @@ module.exports = Joi.object({
     .required()
     .messages({
         'string.empty': `Introduce músculo o grupo muscular.`,
-        'any.required': `Se requiere de un grupo muscular`,
-        'string.min': `Grupo muscular debe tener un mínimo de 2 carácteres.`,
+        'any.required': `Se requiere de un grupo muscular`
     }),
 
     picture: Joi.string()
