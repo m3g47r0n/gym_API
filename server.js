@@ -104,6 +104,7 @@ app.delete('/workouts/:id', checkToken, deleteWorkout);
 // Introduce like o borra el mismo si ya existe
 app.post('/likes/:id', likeDislike);
 
+//Devuelve cantidad de likes por ejercicio
 app.get('likes/:id', getLikes);
 
 // Middleware de 404
