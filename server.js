@@ -7,8 +7,6 @@ const app = express();
 app.use(express.json());
 app.use(morgan('dev'));
 
-//const authUser = require("");
-
 //Controllers
 const { newUser } = require('./src/controllers/users/newUser');
 const { getUser } = require('./src/controllers/users/getUser');
@@ -51,7 +49,7 @@ const checkToken = require('./src/middleware/checkToken');
 app.post('/user', validateInfo(registerSchema), newUser);
 
 // Devuelve usuario por su id
-app.get('/user/:name', getUser);
+app.get('/user/:id', getUser);
 
 // Ingreso de usuario creado
 app.post('/login', validateInfo(loginSchema), login);
@@ -60,28 +58,28 @@ app.post('/login', validateInfo(loginSchema), login);
 app.post('/goals', checkToken, validateInfo(goalsMuscleSchema), newGoal);
 
 //Devuelve ejercicios con dicho objetivo
-app.get('/goals/:id', getWorkoutGoals);
+app.get('/goals/:id', checkToken, getWorkoutGoals);
 
 //Devuelve todos los objetivos
-app.get('/goals', getAllGoals);
+app.get('/goals', checkToken, getAllGoals);
 
 //Crea grupo muscular
 app.post('/muscleGroup', checkToken, validateInfo(goalsMuscleSchema), newMuscleGroup);
 
 //Devuelve ejercicios con el mismo grupo muscular
-app.get('/muscleGroup/:id',getMuscleExercises);
+app.get('/muscleGroup/:id', checkToken, getMuscleExercises);
 
 //Devuelve todos los grupos musculares
-app.get('/muscleGroup',getAllMuscles);
+app.get('/muscleGroup', checkToken, getAllMuscles);
 
 // Crea el ejercicio
 app.post('/exercises', checkToken, validateInfo(exerciseSchema), newExercise);
 
 // Devuelve ejercicio deseado por su id
-app.get('/exercises/:id', getExercise);
+app.get('/exercises/:id', checkToken, getExercise);
 
 //Devuelve todos los ejercicios
-app.get('/exercises', getAllExercises)
+app.get('/exercises', checkToken, getAllExercises)
 
 // Elimina ejercicio
 app.delete('/exercises/:id', checkToken, deleteExercise);
@@ -90,10 +88,10 @@ app.delete('/exercises/:id', checkToken, deleteExercise);
 app.post('/workouts', checkToken, validateInfo(wourkoutSchema), newWorkout);
 
 // Devuelve entrenamiento deseado
-app.get('/workouts/:id', getWorkout);
+app.get('/workouts/:id', checkToken, getWorkout);
 
 //Devuelve todos los entrenamientos
-app.get('/workouts', getAllWorkouts);
+app.get('/workouts', checkToken, getAllWorkouts);
 
 // Modifica entrenamiento
 app.put('/workouts/:id' , checkToken, modifyWorkout);
@@ -102,10 +100,10 @@ app.put('/workouts/:id' , checkToken, modifyWorkout);
 app.delete('/workouts/:id', checkToken, deleteWorkout);
 
 // Introduce like o borra el mismo si ya existe
-app.post('/likes/:id', likeDislike);
+app.post('/likes/:id', checkToken, likeDislike);
 
 //Devuelve cantidad de likes por ejercicio
-app.get('likes/:id', getLikes);
+app.get('likes/:id', checkToken, getLikes);
 
 // Middleware de 404
 app.use((req, res) => {
