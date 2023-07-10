@@ -6,17 +6,18 @@ const { getConnection } = require('./db');
 
 async function dbConnection() {
     let connection;
+    const { MYSQL_DATABASE } = process.env
     try {
         //Conexión con la base de datoss
         connection = await getConnection();
 
         console.log("Borrando base de datos si existe...");
-        await connection.query(`DROP DATABASE IF EXISTS gym_API;`);
+        await connection.query(`DROP DATABASE IF EXISTS ${MYSQL_DATABASE};`);
 
         console.log("Creando base de datos si no existe...");
-        await connection.query(`CREATE DATABASE IF NOT EXISTS gym_API;`)
+        await connection.query(`CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};`)
 
-        await connection.query(`USE gym_API;`);
+        await connection.query(`USE ${MYSQL_DATABASE};`);
 
         //Tabla de usuarios
         await connection.query(`
@@ -34,7 +35,6 @@ async function dbConnection() {
         await connection.query(`
         CREATE TABLE IF NOT EXISTS muscleGroup (
             id INTEGER PRIMARY KEY AUTO_INCREMENT,
-            idUser INTEGER,
             name VARCHAR(50),
             createdAt DATETIME NOT NULL
             );
@@ -53,7 +53,6 @@ async function dbConnection() {
         await connection.query(`
         CREATE TABLE IF NOT EXISTS exercises (
             id INTEGER PRIMARY KEY AUTO_INCREMENT,
-            idUser INTEGER,
             name VARCHAR(50) NOT NULL,
             description VARCHAR(140) NOT NULL,
             picture VARCHAR(300) NOT NULL,

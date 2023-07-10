@@ -16,7 +16,7 @@
  
         //Introducimos el contenido del token en una nueva variable
         req.authUser = tokenInfo;
-         
+
         //Pasamos el control al siguiente middleware, en este caso a la función callback de la ruta
         next();
       }

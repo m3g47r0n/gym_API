@@ -51,7 +51,7 @@ const login = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            token: token, user
+            token: token
         });
 
     } catch(error) {

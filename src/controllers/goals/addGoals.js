@@ -36,7 +36,8 @@ const createGoal = async (name) => {
 const newGoal = async (req, res, next) => {
     try {
         const { name } = req.body;
-
+        console.log(req.body);
+    
         //Agregamos nuevo objetivo por su nombre
         const id = await createGoal(name);
 
