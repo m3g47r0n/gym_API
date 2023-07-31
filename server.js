@@ -2,10 +2,17 @@ require('dotenv').config();
 
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 const app = express();
 
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(cors({origin:[
+    'https://warrior-gym.es',
+    'https://localhost:3000',
+    'https://localhost:5173',
+    'http://localhost:5173'
+]}));
 
 //Controllers
 const { newUser } = require('./src/controllers/users/newUser');
@@ -33,6 +40,7 @@ const { deleteWorkout } = require('./src/controllers/workouts/deleteWorkout');
 
 const { likeDislike } = require('./src/controllers/likes/likeDislike');
 const { getLikes } = require('./src/controllers/likes/getLike');
+const { getLikedExercises } = require('./src/controllers/likes/getLikedExercises');
 
 //Valida la información introducida en el body
 const validateInfo = require('./src/middleware/validateInfo');
@@ -103,7 +111,10 @@ app.delete('/workouts/:id', checkToken, deleteWorkout);
 app.post('/likes/:id', checkToken, likeDislike);
 
 //Devuelve cantidad de likes por ejercicio
-app.get('likes/:id', checkToken, getLikes);
+app.get('/likes/:id', checkToken, getLikes);
+
+//Obtiene los ejercicios con "me gusta" del usuario actual
+app.get('/likes', checkToken, getLikedExercises);
 
 // Middleware de 404
 app.use((req, res) => {
