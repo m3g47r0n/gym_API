@@ -115,6 +115,49 @@ async function insertExercises(connection) {
     }
 }
 
+async function insertWorkout(connection, exercises, workoutType) {
+    try {
+      console.log(`Creando entrenamiento con ejercicios de tipo "${workoutType}"`);
+  
+      // Filtrar los ejercicios por tipo
+      const workoutExercises = exercises.filter(exercise => exercise.type === workoutType);
+  
+      // Crear el entrenamiento con nombre y descripción
+      const workoutName = `Entrenamiento de ${workoutType}`;
+      const workoutDescription = `Entrenamiento de ${workoutType}`;
+      const createdAt = new Date();
+  
+      await connection.query(
+        `
+        INSERT INTO workouts (name, description, createdAt) VALUES (?, ?, ?)
+        `,
+        [workoutName, workoutDescription, createdAt]
+      );
+  
+      // Obtener el ID del entrenamiento que hemos creado
+      const [workoutId] = await connection.query(
+        `
+        SELECT id FROM workouts WHERE name = ? AND description = ? AND createdAt = ?
+        `,
+        [workoutName, workoutDescription, createdAt]
+      );
+  
+      // Insertar los ejercicios del tipo especificado en el entrenamiento
+      for (const exercise of workoutExercises) {
+        await connection.query(
+          `
+          INSERT INTO workouts_exercises (workoutId, exerciseId) VALUES (?, ?)
+          `,
+          [workoutId[0].id, exercise.id]
+        );
+      }
+  
+      console.log(`Entrenamiento creado exitosamente con ejercicios de tipo "${workoutType}".`);
+    } catch (error) {
+      console.error('Error al crear el entrenamiento:', error);
+    }
+}
+
 async function dbConnection() {
   let connection;
   const { MYSQL_DATABASE } = process.env;
@@ -232,6 +275,13 @@ async function dbConnection() {
         [new Date()]
     );
     await insertExercises(connection);
+
+    // Ejercicios precargados
+    const [exercises] = await connection.query('SELECT * FROM exercises');
+
+    // Insertar el entrenamiento con ejercicios de su tipo
+    await insertWorkout(connection, exercises, 'Flexibilidad');
+    await insertWorkout(connection, exercises, 'Fuerza');
   } catch (error) {
     console.error(error);
   } finally {
