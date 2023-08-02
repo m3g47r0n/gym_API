@@ -7,12 +7,16 @@ const app = express();
 
 app.use(express.json());
 app.use(morgan('dev'));
-app.use(cors({origin:[
-    'https://warrior-gym.es',
-    'https://localhost:3000',
-    'https://localhost:5173',
-    'http://localhost:5173'
-]}));
+app.use(
+  cors({
+    origin: [
+      'https://warrior-gym.es',
+      'https://localhost:3000',
+      'https://localhost:5173',
+      'http://localhost:5173',
+    ],
+  })
+);
 
 //Controllers
 const { newUser } = require('./src/controllers/users/newUser');
@@ -23,14 +27,24 @@ const { newGoal } = require('./src/controllers/goals/addGoals');
 const { getWorkoutGoals } = require('./src/controllers/goals/getGoalsWorkouts');
 const { getAllGoals } = require('./src/controllers/goals/getAllGoals');
 
-const { newMuscleGroup } = require('./src/controllers/muscleGroup/addMuscleGroup');
-const { getMuscleExercises } = require('./src/controllers/muscleGroup/getMuscleExercises');
-const { getAllMuscles } = require('./src/controllers/muscleGroup/getAllMuscleGroups');
+const {
+  newMuscleGroup,
+} = require('./src/controllers/muscleGroup/addMuscleGroup');
+const {
+  getMuscleExercises,
+} = require('./src/controllers/muscleGroup/getMuscleExercises');
+const {
+  getAllMuscles,
+} = require('./src/controllers/muscleGroup/getAllMuscleGroups');
 
 const { newExercise } = require('./src/controllers/exercises/newExercises');
 const { getExercise } = require('./src/controllers/exercises/getExercises');
-const { deleteExercise } = require('./src/controllers/exercises/deleteExercises');
-const { getAllExercises } = require('./src/controllers/exercises/getAllExercises');
+const {
+  deleteExercise,
+} = require('./src/controllers/exercises/deleteExercises');
+const {
+  getAllExercises,
+} = require('./src/controllers/exercises/getAllExercises');
 
 const { newWorkout } = require('./src/controllers/workouts/newWorkout');
 const { getWorkout } = require('./src/controllers/workouts/getWorkout');
@@ -40,7 +54,9 @@ const { deleteWorkout } = require('./src/controllers/workouts/deleteWorkout');
 
 const { likeDislike } = require('./src/controllers/likes/likeDislike');
 const { getLikes } = require('./src/controllers/likes/getLike');
-const { getLikedExercises } = require('./src/controllers/likes/getLikedExercises');
+const {
+  getLikedExercises,
+} = require('./src/controllers/likes/getLikedExercises');
 
 //Valida la información introducida en el body
 const validateInfo = require('./src/middleware/validateInfo');
@@ -57,7 +73,7 @@ const checkToken = require('./src/middleware/checkToken');
 app.post('/user', validateInfo(registerSchema), newUser);
 
 // Devuelve usuario por su id
-app.get('/user/:id', getUser);
+app.get('/user', checkToken, getUser);
 
 // Ingreso de usuario creado
 app.post('/login', validateInfo(loginSchema), login);
@@ -72,7 +88,12 @@ app.get('/goals/:id', checkToken, getWorkoutGoals);
 app.get('/goals', checkToken, getAllGoals);
 
 //Crea grupo muscular
-app.post('/muscleGroup', checkToken, validateInfo(goalsMuscleSchema), newMuscleGroup);
+app.post(
+  '/muscleGroup',
+  checkToken,
+  validateInfo(goalsMuscleSchema),
+  newMuscleGroup
+);
 
 //Devuelve ejercicios con el mismo grupo muscular
 app.get('/muscleGroup/:id', checkToken, getMuscleExercises);
@@ -87,7 +108,7 @@ app.post('/exercises', checkToken, validateInfo(exerciseSchema), newExercise);
 app.get('/exercises/:id', checkToken, getExercise);
 
 //Devuelve todos los ejercicios
-app.get('/exercises', checkToken, getAllExercises)
+app.get('/exercises', checkToken, getAllExercises);
 
 // Elimina ejercicio
 app.delete('/exercises/:id', checkToken, deleteExercise);
@@ -102,7 +123,7 @@ app.get('/workouts/:id', checkToken, getWorkout);
 app.get('/workouts', checkToken, getAllWorkouts);
 
 // Modifica entrenamiento
-app.put('/workouts/:id' , checkToken, modifyWorkout);
+app.put('/workouts/:id', checkToken, modifyWorkout);
 
 // Elimina entrenamiento creado
 app.delete('/workouts/:id', checkToken, deleteWorkout);
@@ -118,23 +139,23 @@ app.get('/likes', checkToken, getLikedExercises);
 
 // Middleware de 404
 app.use((req, res) => {
-    res.status(404).send({
-        status: 'error',
-        message: 'Not found',
-    });
+  res.status(404).send({
+    status: 'error',
+    message: 'Not found',
+  });
 });
 
 // Middleware de gestión de errores
 app.use((error, req, res, next) => {
-    console.error(error);
+  console.error(error);
 
-    res.status(error.httpStatus || 500).send({
-        status: 'error',
-        message: error.message,
-    });
+  res.status(error.httpStatus || 500).send({
+    status: 'error',
+    message: error.message,
+  });
 });
 
 // Lanzamos el servidor
 app.listen(3000, () => {
-    console.log('Servidor funcionando');
+  console.log('Servidor funcionando');
 });
