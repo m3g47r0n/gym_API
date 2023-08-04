@@ -16,7 +16,7 @@ async function insertExercises(connection) {
         description:
           'Túmbate de espaldas. Coge la barra con ambas manos y estira los brazos hacia el techo. Baja la barra solo doblando los codos y repite.',
         picture:
-          'https://tenor.com/view/workout-weights-dumbbells-arm-exercise-gif-11959862',
+          'https://media.tenor.com/Zr4aVZVbkjgAAAAC/workout-weights.gif',
         type: 'Fuerza',
         muscleGroupId: 1,
         createdAt: new Date(),
@@ -26,7 +26,7 @@ async function insertExercises(connection) {
         description:
           'De pie, dobla ligeramente las rodillas e inclina la espalda hacia delante manteniéndola siempre recta. Con una mancuerna en cada mano, contrae el bíceps y estira el brazo totalmente hacia atrás.',
         picture:
-          'https://tenor.com/view/exercise-workout-arm-exercise-dumbbells-gif-11959859',
+          'https://media.tenor.com/ZuBIctV9gLsAAAAC/exercise-workout.gif',
         type: 'Fuerza',
         muscleGroupId: 1,
         createdAt: new Date(),
@@ -36,7 +36,7 @@ async function insertExercises(connection) {
         description:
           'Coge una mancuerna en cada mano. Colócate de pie mirando siempre al frente y la espalda recta. Da una zancada hacia delante y dobla la rodilla de la pierna extendida hasta formar un ángulo de 90º.',
         picture:
-          'https://tenor.com/view/lunges-exercise-workout-leg-exercise-working-out-gif-17352592',
+          'https://media.tenor.com/fWiC9Ze5eUMAAAAC/lunges-exercise.gif',
         type: 'Equilibrio',
         muscleGroupId: 2,
         createdAt: new Date(),
@@ -46,7 +46,7 @@ async function insertExercises(connection) {
         description:
           'Abre las piernas, mirando al frente y espalda siempre recta. Baja la pélvis hasta debajo de la altura de las rodillas y cierra los brazos juntando las manos delante de la cara.',
         picture:
-          'https://tenor.com/view/sumo-squat-exercise-workout-working-out-gif-17352727',
+          'https://media.tenor.com/jAjshaoXrewAAAAC/sumo-squat-exercise.gif',
         type: 'Flexibilidad',
         muscleGroupId: 2,
         createdAt: new Date(),
@@ -55,7 +55,7 @@ async function insertExercises(connection) {
         name: 'Extensión rodilla-mancuernas',
         description:
           'Erguido, coge una mancuerna en cada mano y colócalas, con los brazos extendidos, delante de loscuádriceps. Agacha la espalda, siempre recta, doblando ligeramente las rodillas.',
-        picture: 'https://tenor.com/view/workouts-deadlift-gif-24035559',
+        picture: 'https://media.tenor.com/T-L7dxrLv7EAAAAC/workouts-deadlift.gif',
         type: 'Flexibilidad',
         muscleGroupId: 3,
         createdAt: new Date(),
@@ -64,7 +64,7 @@ async function insertExercises(connection) {
         name: 'Remo con mancuernas',
         description:
           'Coge una mancuerna en cada mano. De pie, agacha la espalda, siempre recta, y extiende los brazos hacia abajo de modo que apunten al suelo. Trae las mancuernas hacia el pecho usando la espalda y doblando el codo.',
-        picture: 'https://tenor.com/view/dumbbell-row-standing-gif-10530352',
+        picture: 'https://media.tenor.com/XehF1R8EzM4AAAAC/dumbbell-row.gif',
         type: 'Fuerza',
         muscleGroupId: 3,
         createdAt: new Date(),
@@ -73,7 +73,7 @@ async function insertExercises(connection) {
         name: 'Press banca inclinado mancuerna',
         description:
           'Coge una mancuerna en cada mano. Acuéstate en el banco con el respaldo reclinado. Estira ambos brazos hacia el techo y repite.',
-        picture: 'https://tenor.com/view/2inclne-dumbel-press-gif-26653346',
+        picture: 'https://media.tenor.com/9T1dx6LbbgwAAAAC/2inclne-dumbel-press.gif',
         type: 'Fuerza',
         muscleGroupId: 4,
         createdAt: new Date(),
@@ -82,7 +82,7 @@ async function insertExercises(connection) {
         name: 'Press banca barra horizontal',
         description:
           'Acuéstate horizontalmente en un banco. Con las dos manos, coge la barra y elévala hacia el techo, extendiendo ambos brazo. Baja hasta tocar el pecho y repite.',
-        picture: 'https://tenor.com/view/bench-press-gif-26543726',
+        picture: 'https://media.tenor.com/0hoNLcggDG0AAAAC/bench-press.gif',
         type: 'Fuerza',
         muscleGroupId: 4,
         createdAt: new Date(),
@@ -91,7 +91,7 @@ async function insertExercises(connection) {
         name: 'Press Arnold',
         description:
           'Sentado en un banco, coge una mancuerna en cada mano. Eléva los brazos por encima de la cabeza. Al bajarlos, trae las mancuernas hacia delante de la cara girando las muñecas de tal forma que las palmas estén mirando hacia adentro.',
-        picture: 'https://tenor.com/view/arnold-press-gif-25588656',
+        picture: 'https://media.tenor.com/ZR-_3Mxq0gYAAAAC/arnold-press.gif',
         type: 'Fuerza',
         muscleGroupId: 5,
         createdAt: new Date(),
@@ -101,7 +101,7 @@ async function insertExercises(connection) {
         description:
           'Coge una mancuerna en cada mano. De pie, agacha la espalda hacia delante. Con los brazos estidado y las manos enfrentadas, eleva los brazos lateralmente, como las alas de un pájaro.',
         picture:
-          'https://tenor.com/view/rear-raise-rear-rear-raise-gym-gif-27091664',
+          'https://media.tenor.com/HTvjufujuJAAAAAC/rear-raise-rear.gif',
         type: 'Fuerza',
         muscleGroupId: 5,
         createdAt: new Date(),
