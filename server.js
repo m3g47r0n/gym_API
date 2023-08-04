@@ -11,8 +11,7 @@ app.use(
   cors({
     origin: [
       'https://warrior-gym.es',
-      'https://localhost:3000',
-      'https://localhost:5173',
+      'http://localhost:3000',
       'http://localhost:5173',
     ],
   })
@@ -134,6 +133,9 @@ app.post('/likes/:id', checkToken, likeDislike);
 //Devuelve cantidad de likes por ejercicio. No hace falta, el total de likes de un ejercicio debe venir
 // cuando hagamos un GET a "/exercises/:id"
 app.get('/likes/:id', checkToken, getLikes);
+
+//Obtiene los ejercicios con "me gusta" del usuario actual
+app.get('/likes', checkToken, getLikedExercises);
 
 // Middleware de 404
 app.use((req, res) => {
