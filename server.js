@@ -110,17 +110,15 @@ app.delete('/workouts/:id', checkToken, deleteWorkout);
 // Introduce like o borra el mismo si ya existe
 app.post('/likes/:id', checkToken, likeDislike);
 
-<<<<<<< HEAD
 //Devuelve cantidad de likes por ejercicio. No hace falta, el total de likes de un ejercicio debe venir
 // cuando hagamos un GET a "/exercises/:id"
 app.get('/likes/:id', checkToken, getLikes);
-=======
+
 //Devuelve cantidad de likes por ejercicio
 app.get('/likes/:id', checkToken, getLikes);
 
 //Obtiene los ejercicios con "me gusta" del usuario actual
 app.get('/likes', checkToken, getLikedExercises);
->>>>>>> fc66d9314466c6f29eba576a0629951af5a2a84a
 
 // Middleware de 404
 app.use((req, res) => {
