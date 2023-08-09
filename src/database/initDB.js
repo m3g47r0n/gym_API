@@ -132,64 +132,48 @@ async function insertExercises(connection) {
   }
 }
 
-async function insertWorkout(connection, exercises, workoutType) {
+async function insertWorkout(connection, exercises) {
   try {
-    console.log(
-      `Creando entrenamiento con ejercicios de tipo "${workoutType}"`
-    );
+    console.log(`Creando entrenamiento con ejercicios`);
 
-    // Filtrar los ejercicios por tipo
-    const workoutExercises = exercises.filter(
-      (exercise) => exercise.type === workoutType
-    );
+    const workoutTypes = Array.from(new Set(exercises.map(exercise => exercise.type)));
 
-    //s console.log(workoutExercises)
+    for (const workoutType of workoutTypes) {
+      const workoutExercises = exercises.filter(exercise => exercise.type === workoutType);
+      await createWorkout(connection, workoutExercises);
+    }
 
-    // Crear el entrenamiento con nombre y descripción
-    const workoutName = `Entrenamiento de ${workoutType}`;
-    const workoutDescription = `Entrenamiento de ${workoutType}`;
+    console.log(`Entrenamiento creado.`);
+  } catch (error) {
+    console.error('Error al crear el entrenamiento:', error);
+  }
+}
+
+async function createWorkout(connection, exercises, workoutType) {
+  try {
+    console.log(`Creando entrenamiento`);
+
+    const workoutName = `Entrenamiento personalizado`;
+    const workoutDescription = `Entrenamiento para que mejores tu ${workoutType}.`;
     const createdAt = new Date();
 
-    let goalId;
-
-    //Compruebo que hay un goal con el name workoutType
-    const [goal] = await connection.query(
-      `SELECT id FROM goals WHERE name="${workoutType}";`
-    );
-
-    if (goal.length) {
-      //si lo hay introduzco su id en la variable goalId
-      goalId = goal[0].id;
-    } else {
-      //Si no lo hay lo inserto e introduzto la id de inserción en la variable goalId
-      const [result] = await connection.query(
-        `INSERT INTO goals(name, createdAt) VALUES(?, ?);`,
-        [workoutType, createdAt]
-      );
-      goalId = result.insertId;
-    }
-
-    const [workoutInsert] = await connection.query(
+    const [result] = await connection.query(
       `
-            INSERT INTO workouts (name, description, goalsId, createdAt) VALUES (?, ?, ?, ?)
-            `,
-      [workoutName, workoutDescription, goalId, createdAt]
+      INSERT INTO workouts (name, description, createdAt) VALUES (?, ?, ?)
+      `,
+      [workoutName, workoutDescription, createdAt]
     );
 
-    // Insertar los ejercicios del tipo especificado en el entrenamiento
-    for (const exercise of workoutExercises) {
-
-        await connection.query(
+    for (const exercise of exercises) {
+      await connection.query(
         `
-            INSERT INTO workouts_exercises (workoutId, exerciseId) VALUES (?, ?)
-            `,
-        [workoutInsert.insertId, exercise.id]
+        INSERT INTO workouts_exercises (workoutId, exerciseId) VALUES (?, ?)
+        `,
+        [result.insertId, exercise.id]
       );
     }
 
-    console.log(
-      `Entrenamiento creado exitosamente con ejercicios de tipo "${workoutType}".`
-    );
+    console.log(`Entrenamiento creado con éxito.`);
   } catch (error) {
     console.error('Error al crear el entrenamiento:', error);
   }
@@ -327,9 +311,8 @@ async function dbConnection() {
     // Ejercicios precargados
     const [exercises] = await connection.query('SELECT * FROM exercises');
 
-    // Insertar el entrenamiento con ejercicios de su tipo
-    await insertWorkout(connection, exercises, 'Flexibilidad');
-    await insertWorkout(connection, exercises, 'Fuerza');
+    // Insertar el entrenamiento con ejercicios
+    await insertWorkout(connection, exercises);
   } catch (error) {
     console.error(error);
   } finally {
