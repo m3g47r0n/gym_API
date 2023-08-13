@@ -44,6 +44,9 @@ const {
 const {
   getAllExercises,
 } = require('./src/controllers/exercises/getAllExercises');
+const {
+  addExercisesInWorkout,
+} = require('./src/controllers/exercises/addExercisesInWorkouts');
 
 const { newWorkout } = require('./src/controllers/workouts/newWorkout');
 const { getWorkout } = require('./src/controllers/workouts/getWorkout');
@@ -126,6 +129,8 @@ app.put('/workouts/:id', checkToken, modifyWorkout);
 
 // Elimina entrenamiento creado
 app.delete('/workouts/:id', checkToken, deleteWorkout);
+
+app.post('/exercisesworkouts', checkToken, addExercisesInWorkout);
 
 // Introduce like o borra el mismo si ya existe
 app.post('/likes/:id', checkToken, likeDislike);

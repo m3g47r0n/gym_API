@@ -50,9 +50,12 @@ const login = async (req, res, next) => {
       expiresIn: '60d',
     });
 
+    const userId = user.id;
+
     res.send({
       status: 'ok',
       token: token,
+      user: userId,
     });
   } catch (error) {
     next(error);

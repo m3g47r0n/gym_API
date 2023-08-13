@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { generateError } = require('./helpers');
 
 module.exports = (req, res, next) => {
   try {
@@ -7,9 +8,7 @@ module.exports = (req, res, next) => {
 
     //Comprobamos si se envió authorization en los headers
     if (!authorization) {
-      const error = new Error('Falta de autorización');
-      error.httpStatus = 401;
-      throw error;
+      throw generateError('Falta de autorización', 400);
     } else {
       const tokenInfo = jwt.verify(authorization, process.env.SECRET);
 
@@ -21,6 +20,6 @@ module.exports = (req, res, next) => {
     }
   } catch (err) {
     res.status(401);
-    res.send('Usuario no autorizado');
+    res.send('Usuario no registrado');
   }
 };
