@@ -69,13 +69,13 @@ const checkToken = require('./src/middleware/checkToken');
 
 // Rutas:
 // Registro de un nuevo usuario
-app.post('/user', validateInfo(registerSchema), newUser);
+app.post('/users/register', validateInfo(registerSchema), newUser);
 
 // Devuelve usuario por su id
 app.get('/user', checkToken, getUser);
 
 // Ingreso de usuario creado
-app.post('/login', validateInfo(loginSchema), login);
+app.post('/users/login', validateInfo(loginSchema), login);
 
 // Crea un objetivo nuevo
 app.post('/goals', checkToken, validateInfo(goalsMuscleSchema), newGoal);
