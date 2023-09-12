@@ -1,55 +1,66 @@
 const { getConnection } = require('../../database/db');
 const { generateError } = require('../../middleware/helpers');
 
-const favoriteUnfavorite = async (req, res, next) => {
+// likeDislike controller
+const favoriteButton = async (req, res, next) => {
     try {
         const { id } = req.params;
         const userId = req.authUser.id; // Obtiene el userId del token de autenticación
 
-        // Ejecuta la función workoutFavorite y obtiene el estado de favorito actualizado
-        const isFavorite = await workoutFavorite(id, userId); // Pasamos también el userId
+        // Ejecuta la función workoutFavorite y obtiene el recuento de favoritos actualizado
+        const favoriteCount = await workoutFavorite(id, userId); // Pasamos también el userId
 
         res.send({
             status: 'ok',
-            message: isFavorite ? 'Entrenamiento marcado como favorito' : 'Entrenamiento eliminado de favoritos',
-            isFavorite: isFavorite ? 1 : 0
+            message: `Favorite`,
+            favoriteCount: favoriteCount // Envia el recuento de favoritos al cliente
         });
 
     } catch (error) {
-        next(error);
+        next(error)
     }
 };
 
+// workoutFavorite controller
 const workoutFavorite = async (id, userId) => {
     let connection;
     try {
         // Conexión con la base de datos
         connection = await getConnection();
 
-        const [favorite] = await connection.query(`
+        const [workout] = await connection.query(`
         SELECT * FROM favorites WHERE workoutsId = ? AND userId = ? 
         `, [id, userId]); // Aquí también incluimos el userId en la consulta
 
-        // Comprueba si el entrenamiento existe en la base de datos.
-        if (favorite.length === 0) {
-            generateError('El entrenamiento no existe.', 404);
+        // Comprueba si el workout existe en la base de datos.
+        if (workout.length === 0) {
+            generateError('El workout no existe.', 404);
         }
 
-        if (favorite.length < 1) {
+        if (workout.length < 1) {
             await connection.query(`
             INSERT INTO favorites (workoutsId, userId) VALUES (?, ?)  
             `, [id, userId]
             );
 
-            return true; // Marcar como favorito
+            const [favoriteCount] = await connection.query(`
+            SELECT COUNT(id) AS favorites FROM favorites WHERE workoutsId = ?
+            `, [id]
+            );
 
+            return favoriteCount[0];
         } else {
             await connection.query(`
             DELETE FROM favorites WHERE workoutsId = ? AND userId = ?  
             `, [id, userId]
             );
 
-            return false; // Eliminar de favoritos
+            const [favoriteCount] = await connection.query(`
+            SELECT COUNT(id) AS favorites FROM favorites WHERE workoutsId = ?
+            `, [id]
+            );
+
+            return favoriteCount[0];
         }
     } finally {
         // Si existe conexión, se libera
@@ -59,5 +70,5 @@ const workoutFavorite = async (id, userId) => {
 
 
 module.exports = {
-    favoriteUnfavorite
+    favoriteButton
 };
