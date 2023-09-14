@@ -80,6 +80,7 @@ const wourkoutSchema = require('./src/validators/workoutSchema');
 const goalsMuscleSchema = require('./src/validators/goalsMuscleSchema');
 
 const checkToken = require('./src/middleware/checkToken');
+const isAdmin = require('./src/middleware/isAdmin');
 
 // Rutas:
 // Registro de un nuevo usuario
@@ -92,7 +93,13 @@ app.get('/user', checkToken, getUser);
 app.post('/users/login', validateInfo(loginSchema), login);
 
 // Crea un objetivo nuevo
-app.post('/goals', checkToken, validateInfo(goalsMuscleSchema), newGoal);
+app.post(
+  '/goals',
+  checkToken,
+  isAdmin,
+  validateInfo(goalsMuscleSchema),
+  newGoal
+);
 
 //Devuelve ejercicios con dicho objetivo
 app.get('/goals/:id', checkToken, getWorkoutGoals);
@@ -104,6 +111,7 @@ app.get('/goals', checkToken, getAllGoals);
 app.post(
   '/muscleGroup',
   checkToken,
+  isAdmin,
   validateInfo(goalsMuscleSchema),
   newMuscleGroup
 );
@@ -115,7 +123,13 @@ app.get('/muscleGroups/:id', checkToken, getMuscleExercises);
 app.get('/muscleGroups', checkToken, getAllMuscles);
 
 // Crea el ejercicio
-app.post('/exercises', checkToken, validateInfo(exerciseSchema), newExercise);
+app.post(
+  '/exercises',
+  checkToken,
+  isAdmin,
+  validateInfo(exerciseSchema),
+  newExercise
+);
 
 // Devuelve ejercicio deseado por su id
 app.get('/exercises/:id', checkToken, getExercise);
@@ -124,26 +138,34 @@ app.get('/exercises/:id', checkToken, getExercise);
 app.get('/exercises', checkToken, getAllExercises);
 
 // Elimina ejercicio
-app.delete('/exercises/:id', checkToken, deleteExercise);
+app.delete('/exercises/:id', checkToken, isAdmin, deleteExercise);
 
 // Crea un entrenamiento
-app.post('/workouts', checkToken, validateInfo(wourkoutSchema), newWorkout);
+app.post(
+  '/workouts',
+  checkToken,
+  isAdmin,
+  validateInfo(wourkoutSchema),
+  newWorkout
+);
 
 // Devuelve entrenamiento deseado
 app.get('/workouts/:id', checkToken, getWorkout);
 
+//Devuelve ejercicios dentro del workout deseado
 app.get('/workout/:id', checkToken, exercisesInWorkouts);
 
 //Devuelve todos los entrenamientos
 app.get('/workouts', checkToken, getAllWorkouts);
 
 // Modifica entrenamiento
-app.put('/workouts/:id', checkToken, modifyWorkout);
+app.put('/workouts/:id', checkToken, isAdmin, modifyWorkout);
 
 // Elimina entrenamiento creado
-app.delete('/workouts/:id', checkToken, deleteWorkout);
+app.delete('/workouts/:id', checkToken, isAdmin, deleteWorkout);
 
-app.post('/exercisesworkouts', checkToken, addExercisesInWorkout);
+//Añade ejercicios en un workout
+app.post('/exercisesworkouts', checkToken, isAdmin, addExercisesInWorkout);
 
 // Introduce like o borra el mismo si ya existe
 app.post('/likes/:id', checkToken, likeDislike);
