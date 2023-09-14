@@ -111,8 +111,8 @@ async function insertExercises(connection) {
     for (const exercise of exercisesList) {
       await connection.query(
         `
-                INSERT INTO exercises (name, description, picture, type, muscleGroupId, createdAt) VALUES (?, ?, ?, ?, ?, ?)
-                `,
+        INSERT INTO exercises (name, description, picture, type, muscleGroupId, createdAt) VALUES (?, ?, ?, ?, ?, ?)
+        `,
         [
           exercise.name,
           exercise.description,
@@ -139,7 +139,34 @@ async function insertWorkout(connection) {
         name: 'HIIT Cardio',
         description:
           'Basado en sesiones de intervalos cortos y muy intensos que alternan esfuerzo y recuperación.',
+        goalsId: 4,
+        createdAt: new Date(),
+      },
+      {
+        name: 'Resistencia',
+        description:
+          'Ejercicios físicos que inducen contracciones musculares y desarrollan fuerza, resistencia anaeróbica y resistencia muscular.',
+        goalsId: 3,
+        createdAt: new Date(),
+      },
+      {
+        name: 'Yoga',
+        description:
+          'Posturas básicas de yoga para relajarte y estirar el cuerpo.',
+        goalsId: 2,
+        createdAt: new Date(),
+      },
+      {
+        name: 'Going Stronger',
+        description:
+          'Los aumentos de fuerza te harán rendir al máximo en tu temporada de volumen.',
         goalsId: 1,
+        createdAt: new Date(),
+      },
+      {
+        name: 'Warm-up',
+        description: 'Ejercicios para un calentamiento antes de empezar.',
+        goalsId: 3,
         createdAt: new Date(),
       },
     ];
@@ -156,6 +183,81 @@ async function insertWorkout(connection) {
     console.log('Entrenamientos introducidos correctamente.');
   } catch (error) {
     console.log('Error al introducir los ejercicios:', error);
+  }
+}
+
+async function insertExercisesWorkouts(connection) {
+  try {
+    console.log('Cargando ejercicios en entrenamientos');
+
+    //Ejercicios en entrenamientos precargados
+    const exercisesInWorkouts = [
+      {
+        workoutId: 4,
+        exerciseId: 1,
+      },
+      {
+        workoutId: 4,
+        exerciseId: 2,
+      },
+      {
+        workoutId: 1,
+        exerciseId: 6,
+      },
+      {
+        workoutId: 1,
+        exerciseId: 7,
+      },
+      {
+        workoutId: 1,
+        exerciseId: 8,
+      },
+      {
+        workoutId: 1,
+        exerciseId: 9,
+      },
+      {
+        workoutId: 3,
+        exerciseId: 4,
+      },
+      {
+        workoutId: 2,
+        exerciseId: 1,
+      },
+      {
+        workoutId: 2,
+        exerciseId: 2,
+      },
+      {
+        workoutId: 2,
+        exerciseId: 3,
+      },
+      {
+        workoutId: 2,
+        exerciseId: 4,
+      },
+      {
+        workoutId: 2,
+        exerciseId: 5,
+      },
+      {
+        workoutId: 2,
+        exerciseId: 6,
+      },
+    ];
+
+    //Introducimos los ejercicios en la tabla "workouts_exercises"
+    for (const exercises of exercisesInWorkouts) {
+      await connection.query(
+        `
+          INSERT INTO workouts_exercises (workoutId, exerciseId) VALUES (?, ?)
+        `,
+        [exercises.workoutId, exercises.exerciseId]
+      );
+    }
+    console.log('Ejercicios introducidos correctamente en entrenamientos.');
+  } catch (error) {
+    console.log('Error para introducir los ejercicos en los entrenamientos.');
   }
 }
 
@@ -253,37 +355,46 @@ async function dbConnection() {
             );
         `);
 
+    //Tabla de favoritos
+    await connection.query(`
+        CREATE TABLE IF NOT EXISTS favorites (
+            id INTEGER PRIMARY KEY AUTO_INCREMENT,
+            workoutsId INTEGER NOT NULL,
+            userId INTEGER NOT NULL,
+            FOREIGN KEY (workoutsId) REFERENCES workouts(id) ON DELETE CASCADE,
+            FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
+            );
+        `);
+
     //Encriptamos la contraseña del administrador
     const hashedPass = await bcrypt.hash('0010', 10);
 
     // Insertamos el usuario administrador
     await connection.query(
-      `
-            INSERT INTO users (name, email, password, admin, createdAt) VALUES ("admin", "admin@admin.com", "${hashedPass}", true, ?)
-        `,
+      `INSERT INTO users (name, email, password, admin, createdAt) VALUES ("admin", "admin@admin.com", "${hashedPass}", true, ?)`,
       [new Date()]
     );
 
     // Agregamos los grupos musculares.
     await connection.query(
-      `INSERT INTO muscleGroup (name, createdAt) VALUES ("brazo", ?)`,
+      `INSERT INTO muscleGroup (name, createdAt) VALUES ("Brazo", ?)`,
       [new Date()]
     );
 
     await connection.query(
-      `INSERT INTO muscleGroup (name, createdAt) VALUES ("pierna", ?)`,
+      `INSERT INTO muscleGroup (name, createdAt) VALUES ("Pierna", ?)`,
       [new Date()]
     );
     await connection.query(
-      `INSERT INTO muscleGroup (name, createdAt) VALUES ("espalda", ?)`,
+      `INSERT INTO muscleGroup (name, createdAt) VALUES ("Espalda", ?)`,
       [new Date()]
     );
     await connection.query(
-      `INSERT INTO muscleGroup (name, createdAt) VALUES ("pecho", ?)`,
+      `INSERT INTO muscleGroup (name, createdAt) VALUES ("Pecho", ?)`,
       [new Date()]
     );
     await connection.query(
-      `INSERT INTO muscleGroup (name, createdAt) VALUES ("hombro", ?)`,
+      `INSERT INTO muscleGroup (name, createdAt) VALUES ("Hombro", ?)`,
       [new Date()]
     );
 
@@ -298,8 +409,19 @@ async function dbConnection() {
       [new Date()]
     );
 
+    await connection.query(
+      `INSERT INTO goals (name, createdAt) VALUES ("Resistencia", ?)`,
+      [new Date()]
+    );
+
+    await connection.query(
+      `INSERT INTO goals (name, createdAt) VALUES ("Baja de peso", ?)`,
+      [new Date()]
+    );
+
     await insertExercises(connection);
     await insertWorkout(connection);
+    await insertExercisesWorkouts(connection);
   } catch (error) {
     console.error(error);
   } finally {

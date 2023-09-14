@@ -50,6 +50,9 @@ const {
 
 const { newWorkout } = require('./src/controllers/workouts/newWorkout');
 const { getWorkout } = require('./src/controllers/workouts/getWorkout');
+const {
+  exercisesInWorkouts,
+} = require('./src/controllers/workouts/exercisesInWorkouts');
 const { getAllWorkouts } = require('./src/controllers/workouts/getAllWorkouts');
 const { modifyWorkout } = require('./src/controllers/workouts/modifyWorkout');
 const { deleteWorkout } = require('./src/controllers/workouts/deleteWorkout');
@@ -59,6 +62,14 @@ const { getLikes } = require('./src/controllers/likes/getLike');
 const {
   getLikedExercises,
 } = require('./src/controllers/likes/getLikedExercises');
+
+const {
+  getFavoriteWorkouts,
+} = require('./src/controllers/favorites/getFavoriteWorkout');
+const {
+  favoriteButton,
+} = require('./src/controllers/favorites/favoriteButton');
+const { getFavorites } = require('./src/controllers/favorites/getFavorites');
 
 //Valida la información introducida en el body
 const validateInfo = require('./src/middleware/validateInfo');
@@ -121,6 +132,8 @@ app.post('/workouts', checkToken, validateInfo(wourkoutSchema), newWorkout);
 // Devuelve entrenamiento deseado
 app.get('/workouts/:id', checkToken, getWorkout);
 
+app.get('/workout/:id', checkToken, exercisesInWorkouts);
+
 //Devuelve todos los entrenamientos
 app.get('/workouts', checkToken, getAllWorkouts);
 
@@ -141,6 +154,15 @@ app.get('/likes/:id', checkToken, getLikes);
 
 //Obtiene los ejercicios con "me gusta" del usuario actual
 app.get('/likes', checkToken, getLikedExercises);
+
+// Introduce favorito o borra el mismo si ya existe
+app.post('/favorites/:id', checkToken, favoriteButton);
+
+//Devuelve cantidad de favoritos por objetivo
+app.get('/favorites/:id', checkToken, getFavorites);
+
+//Obtiene los objetivos favoritos del usuario actual
+app.get('/favorites', checkToken, getFavoriteWorkouts);
 
 // Middleware de 404
 app.use((req, res) => {
