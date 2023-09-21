@@ -14,8 +14,8 @@ const addExercises = async (
     connection = await getConnection();
 
     const [exercise] = await connection.query(
-        `SELECT * FROM exercises WHERE name = ? AND type = ?`,
-        [name, type]
+      `SELECT * FROM exercises WHERE name = ? AND type = ?`,
+      [name, type]
     );
 
     //Comprueba si el ejercicio existe
