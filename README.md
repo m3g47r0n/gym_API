@@ -81,6 +81,10 @@ node_modules
 
 Escriba _npm run dev_ en el terminal.
 
+**Usuario administrador**
+Email: admin@admin.com
+Contraseña: 0010
+
 ## Autores :black_nib:
 
 - **Guillermo** - _Goals_
