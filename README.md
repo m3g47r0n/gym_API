@@ -81,7 +81,8 @@ node_modules
 
 Escriba _npm run dev_ en el terminal.
 
-**Usuario administrador**
+## Usuario administrador
+
 Email: admin@admin.com
 Contraseña: 0010
 
