@@ -1,57 +1,59 @@
 const { generateError } = require('../../middleware/helpers');
 const { getConnection } = require('../../database/db');
 
-const workoutChanges = async (id, name, description, goalsId, exercisesId) => {
-    let connection;
-    try {
-        // Conectamos a la base de datos
-        connection = await getConnection();
+const workoutChanges = async (id, name, description, goalsId) => {
+  let connection;
+  try {
+    // Conectamos a la base de datos
+    connection = await getConnection();
 
-        const [ workouts ] = await connection.query(`
+    const [workouts] = await connection.query(
+      `
         SELECT * FROM workouts WHERE id = ?
-        `, [id]
-        );
-        
-        if (workouts.length === 0) {
-            throw generateError('No existen workouts con ese id.', 404);
-        }
+        `,
+      [id]
+    );
 
-        //Modifica entrenamiento en la base de datos
-        const workoutChanged = await connection.query(`
+    if (workouts.length === 0) {
+      throw generateError('No existen workouts con ese id.', 404);
+    }
+
+    //Modifica entrenamiento en la base de datos
+    const workoutChanged = await connection.query(
+      `
         UPDATE workouts SET 
         name = COALESCE(?, name),
         description = COALESCE(?, description),
         goalsId = COALESCE(?, goalsId),
-        exercisesId = COALESCE(?, exercisesId),
         modifiedAt = (?) WHERE id = ?
-        `, [name, description, goalsId, exercisesId, new Date(), id]);
+        `,
+      [name, description, goalsId, new Date(), id]
+    );
 
-        return workoutChanged;
-
-    } finally {
-        //Si existe conexión, se libera
-        if (connection) connection.release();
-    }
+    return workoutChanged;
+  } finally {
+    //Si existe conexión, se libera
+    if (connection) connection.release();
+  }
 };
 
 const modifyWorkout = async (req, res, next) => {
-    try {
-        const { id } = req.params;
-        
-        const { name, description, goalsId, exercisesId } = req.body;
+  try {
+    const { id } = req.params;
 
-        await workoutChanges(id, name, description, goalsId, exercisesId);
+    const { name, description, goalsId } = req.body;
 
-        res.send({
-            status: 'ok',
-            message: 'Entrenamiento modificado!'
-        });
+    await workoutChanges(id, name, description, goalsId);
 
-    } catch (err) {
+    res.send({
+      status: 'ok',
+      message: 'Entrenamiento modificado!',
+    });
+  } catch (err) {
     next(err);
-    }
+  }
 };
-    
+
 module.exports = {
-    modifyWorkout
+  modifyWorkout,
 };

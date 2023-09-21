@@ -15,8 +15,7 @@ async function insertExercises(connection) {
         name: 'Francés horizontal',
         description:
           'Túmbate de espaldas. Coge la barra con ambas manos y estira los brazos hacia el techo. Baja la barra solo doblando los codos y repite.',
-        picture:
-          'https://tenor.com/view/workout-weights-dumbbells-arm-exercise-gif-11959862',
+        picture: 'https://media.tenor.com/Zr4aVZVbkjgAAAAC/workout-weights.gif',
         type: 'Fuerza',
         muscleGroupId: 1,
         createdAt: new Date(),
@@ -26,7 +25,7 @@ async function insertExercises(connection) {
         description:
           'De pie, dobla ligeramente las rodillas e inclina la espalda hacia delante manteniéndola siempre recta. Con una mancuerna en cada mano, contrae el bíceps y estira el brazo totalmente hacia atrás.',
         picture:
-          'https://tenor.com/view/exercise-workout-arm-exercise-dumbbells-gif-11959859',
+          'https://media.tenor.com/ZuBIctV9gLsAAAAC/exercise-workout.gif',
         type: 'Fuerza',
         muscleGroupId: 1,
         createdAt: new Date(),
@@ -35,8 +34,7 @@ async function insertExercises(connection) {
         name: 'Zancadas',
         description:
           'Coge una mancuerna en cada mano. Colócate de pie mirando siempre al frente y la espalda recta. Da una zancada hacia delante y dobla la rodilla de la pierna extendida hasta formar un ángulo de 90º.',
-        picture:
-          'https://tenor.com/view/lunges-exercise-workout-leg-exercise-working-out-gif-17352592',
+        picture: 'https://media.tenor.com/fWiC9Ze5eUMAAAAC/lunges-exercise.gif',
         type: 'Equilibrio',
         muscleGroupId: 2,
         createdAt: new Date(),
@@ -46,7 +44,7 @@ async function insertExercises(connection) {
         description:
           'Abre las piernas, mirando al frente y espalda siempre recta. Baja la pélvis hasta debajo de la altura de las rodillas y cierra los brazos juntando las manos delante de la cara.',
         picture:
-          'https://tenor.com/view/sumo-squat-exercise-workout-working-out-gif-17352727',
+          'https://media.tenor.com/jAjshaoXrewAAAAC/sumo-squat-exercise.gif',
         type: 'Flexibilidad',
         muscleGroupId: 2,
         createdAt: new Date(),
@@ -55,7 +53,8 @@ async function insertExercises(connection) {
         name: 'Extensión rodilla-mancuernas',
         description:
           'Erguido, coge una mancuerna en cada mano y colócalas, con los brazos extendidos, delante de loscuádriceps. Agacha la espalda, siempre recta, doblando ligeramente las rodillas.',
-        picture: 'https://tenor.com/view/workouts-deadlift-gif-24035559',
+        picture:
+          'https://media.tenor.com/T-L7dxrLv7EAAAAC/workouts-deadlift.gif',
         type: 'Flexibilidad',
         muscleGroupId: 3,
         createdAt: new Date(),
@@ -64,7 +63,7 @@ async function insertExercises(connection) {
         name: 'Remo con mancuernas',
         description:
           'Coge una mancuerna en cada mano. De pie, agacha la espalda, siempre recta, y extiende los brazos hacia abajo de modo que apunten al suelo. Trae las mancuernas hacia el pecho usando la espalda y doblando el codo.',
-        picture: 'https://tenor.com/view/dumbbell-row-standing-gif-10530352',
+        picture: 'https://media.tenor.com/XehF1R8EzM4AAAAC/dumbbell-row.gif',
         type: 'Fuerza',
         muscleGroupId: 3,
         createdAt: new Date(),
@@ -73,7 +72,8 @@ async function insertExercises(connection) {
         name: 'Press banca inclinado mancuerna',
         description:
           'Coge una mancuerna en cada mano. Acuéstate en el banco con el respaldo reclinado. Estira ambos brazos hacia el techo y repite.',
-        picture: 'https://tenor.com/view/2inclne-dumbel-press-gif-26653346',
+        picture:
+          'https://media.tenor.com/9T1dx6LbbgwAAAAC/2inclne-dumbel-press.gif',
         type: 'Fuerza',
         muscleGroupId: 4,
         createdAt: new Date(),
@@ -82,7 +82,7 @@ async function insertExercises(connection) {
         name: 'Press banca barra horizontal',
         description:
           'Acuéstate horizontalmente en un banco. Con las dos manos, coge la barra y elévala hacia el techo, extendiendo ambos brazo. Baja hasta tocar el pecho y repite.',
-        picture: 'https://tenor.com/view/bench-press-gif-26543726',
+        picture: 'https://media.tenor.com/0hoNLcggDG0AAAAC/bench-press.gif',
         type: 'Fuerza',
         muscleGroupId: 4,
         createdAt: new Date(),
@@ -91,7 +91,7 @@ async function insertExercises(connection) {
         name: 'Press Arnold',
         description:
           'Sentado en un banco, coge una mancuerna en cada mano. Eléva los brazos por encima de la cabeza. Al bajarlos, trae las mancuernas hacia delante de la cara girando las muñecas de tal forma que las palmas estén mirando hacia adentro.',
-        picture: 'https://tenor.com/view/arnold-press-gif-25588656',
+        picture: 'https://media.tenor.com/ZR-_3Mxq0gYAAAAC/arnold-press.gif',
         type: 'Fuerza',
         muscleGroupId: 5,
         createdAt: new Date(),
@@ -100,8 +100,7 @@ async function insertExercises(connection) {
         name: 'Pájaro erguido',
         description:
           'Coge una mancuerna en cada mano. De pie, agacha la espalda hacia delante. Con los brazos estidado y las manos enfrentadas, eleva los brazos lateralmente, como las alas de un pájaro.',
-        picture:
-          'https://tenor.com/view/rear-raise-rear-rear-raise-gym-gif-27091664',
+        picture: 'https://media.tenor.com/HTvjufujuJAAAAAC/rear-raise-rear.gif',
         type: 'Fuerza',
         muscleGroupId: 5,
         createdAt: new Date(),
@@ -112,8 +111,8 @@ async function insertExercises(connection) {
     for (const exercise of exercisesList) {
       await connection.query(
         `
-                INSERT INTO exercises (name, description, picture, type, muscleGroupId, createdAt) VALUES (?, ?, ?, ?, ?, ?)
-                `,
+        INSERT INTO exercises (name, description, picture, type, muscleGroupId, createdAt) VALUES (?, ?, ?, ?, ?, ?)
+        `,
         [
           exercise.name,
           exercise.description,
@@ -123,8 +122,6 @@ async function insertExercises(connection) {
           exercise.createdAt,
         ]
       );
-
-      //exercise.id = result.insertId;
     }
     console.log('Ejercicios introducidos correctamente.');
   } catch (error) {
@@ -132,65 +129,135 @@ async function insertExercises(connection) {
   }
 }
 
-async function insertWorkout(connection, exercises, workoutType) {
+async function insertWorkout(connection) {
   try {
-    console.log(
-      `Creando entrenamiento con ejercicios de tipo "${workoutType}"`
-    );
+    console.log('Carga de ejercicios en la base de datos');
 
-    // Filtrar los ejercicios por tipo
-    const workoutExercises = exercises.filter(
-      (exercise) => exercise.type === workoutType
-    );
+    //Ejercicios precargados
+    const workoutList = [
+      {
+        name: 'HIIT Cardio',
+        description:
+          'Basado en sesiones de intervalos cortos y muy intensos que alternan esfuerzo y recuperación.',
+        goalsId: 4,
+        createdAt: new Date(),
+      },
+      {
+        name: 'Resistencia',
+        description:
+          'Ejercicios físicos que inducen contracciones musculares y desarrollan fuerza, resistencia anaeróbica y resistencia muscular.',
+        goalsId: 3,
+        createdAt: new Date(),
+      },
+      {
+        name: 'Yoga',
+        description:
+          'Posturas básicas de yoga para relajarte y estirar el cuerpo.',
+        goalsId: 2,
+        createdAt: new Date(),
+      },
+      {
+        name: 'Going Stronger',
+        description:
+          'Los aumentos de fuerza te harán rendir al máximo en tu temporada de volumen.',
+        goalsId: 1,
+        createdAt: new Date(),
+      },
+      {
+        name: 'Warm-up',
+        description: 'Ejercicios para un calentamiento antes de empezar.',
+        goalsId: 3,
+        createdAt: new Date(),
+      },
+    ];
 
-    //s console.log(workoutExercises)
-
-    // Crear el entrenamiento con nombre y descripción
-    const workoutName = `Entrenamiento de ${workoutType}`;
-    const workoutDescription = `Entrenamiento de ${workoutType}`;
-    const createdAt = new Date();
-
-    let goalId;
-
-    //Compruebo que hay un goal con el name workoutType
-    const [goal] = await connection.query(
-      `SELECT id FROM goals WHERE name="${workoutType}";`
-    );
-
-    if (goal.length) {
-      //si lo hay introduzco su id en la variable goalId
-      goalId = goal[0].id;
-    } else {
-      //Si no lo hay lo inserto e introduzto la id de inserción en la variable goalId
-      const [result] = await connection.query(
-        `INSERT INTO goals(name, createdAt) VALUES(?, ?);`,
-        [workoutType, createdAt]
-      );
-      goalId = result.insertId;
-    }
-
-    const [workoutInsert] = await connection.query(
-      `
-            INSERT INTO workouts (name, description, goalsId, createdAt) VALUES (?, ?, ?, ?)
-            `,
-      [workoutName, workoutDescription, goalId, createdAt]
-    );
-
-    // Insertar los ejercicios del tipo especificado en el entrenamiento
-    for (const exercise of workoutExercises) {
+    //Introducimos entrenamientos en la tabla "workouts"
+    for (const workout of workoutList) {
       await connection.query(
         `
-            INSERT INTO workouts_exercises (workoutId, exerciseId) VALUES (?, ?)
-            `,
-        [workoutInsert.insertId, exercise.id]
+          INSERT INTO workouts (name, description, goalsId, createdAt) VALUES (?, ?, ?, ?)
+        `,
+        [workout.name, workout.description, workout.goalsId, workout.createdAt]
       );
     }
-
-    console.log(
-      `Entrenamiento creado exitosamente con ejercicios de tipo "${workoutType}".`
-    );
+    console.log('Entrenamientos introducidos correctamente.');
   } catch (error) {
-    console.error('Error al crear el entrenamiento:', error);
+    console.log('Error al introducir los ejercicios:', error);
+  }
+}
+
+async function insertExercisesWorkouts(connection) {
+  try {
+    console.log('Cargando ejercicios en entrenamientos');
+
+    //Ejercicios en entrenamientos precargados
+    const exercisesInWorkouts = [
+      {
+        workoutId: 4,
+        exerciseId: 1,
+      },
+      {
+        workoutId: 4,
+        exerciseId: 2,
+      },
+      {
+        workoutId: 1,
+        exerciseId: 6,
+      },
+      {
+        workoutId: 1,
+        exerciseId: 7,
+      },
+      {
+        workoutId: 1,
+        exerciseId: 8,
+      },
+      {
+        workoutId: 1,
+        exerciseId: 9,
+      },
+      {
+        workoutId: 3,
+        exerciseId: 4,
+      },
+      {
+        workoutId: 2,
+        exerciseId: 1,
+      },
+      {
+        workoutId: 2,
+        exerciseId: 2,
+      },
+      {
+        workoutId: 2,
+        exerciseId: 3,
+      },
+      {
+        workoutId: 2,
+        exerciseId: 4,
+      },
+      {
+        workoutId: 2,
+        exerciseId: 5,
+      },
+      {
+        workoutId: 2,
+        exerciseId: 6,
+      },
+    ];
+
+    //Introducimos los ejercicios en la tabla "workouts_exercises"
+    for (const exercises of exercisesInWorkouts) {
+      await connection.query(
+        `
+          INSERT INTO workouts_exercises (workoutId, exerciseId) VALUES (?, ?)
+        `,
+        [exercises.workoutId, exercises.exerciseId]
+      );
+    }
+    console.log('Ejercicios introducidos correctamente en entrenamientos.');
+  } catch (error) {
+    console.log('Error para introducir los ejercicos en los entrenamientos.');
   }
 }
 
@@ -288,47 +355,73 @@ async function dbConnection() {
             );
         `);
 
+    //Tabla de favoritos
+    await connection.query(`
+        CREATE TABLE IF NOT EXISTS favorites (
+            id INTEGER PRIMARY KEY AUTO_INCREMENT,
+            workoutsId INTEGER NOT NULL,
+            userId INTEGER NOT NULL,
+            FOREIGN KEY (workoutsId) REFERENCES workouts(id) ON DELETE CASCADE,
+            FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE
+            );
+        `);
+
     //Encriptamos la contraseña del administrador
     const hashedPass = await bcrypt.hash('0010', 10);
 
     // Insertamos el usuario administrador
     await connection.query(
-      `
-            INSERT INTO users (name, email, password, admin, createdAt) VALUES ("admin", "admin@admin.com", "${hashedPass}", true, ?)
-        `,
+      `INSERT INTO users (name, email, password, admin, createdAt) VALUES ("admin", "admin@admin.com", "${hashedPass}", true, ?)`,
       [new Date()]
     );
 
     // Agregamos los grupos musculares.
     await connection.query(
-      `INSERT INTO muscleGroup (name, createdAt) VALUES ("brazo", ?)`,
+      `INSERT INTO muscleGroup (name, createdAt) VALUES ("Brazo", ?)`,
       [new Date()]
     );
 
     await connection.query(
-      `INSERT INTO muscleGroup (name, createdAt) VALUES ("pierna", ?)`,
+      `INSERT INTO muscleGroup (name, createdAt) VALUES ("Pierna", ?)`,
       [new Date()]
     );
     await connection.query(
-      `INSERT INTO muscleGroup (name, createdAt) VALUES ("espalda", ?)`,
+      `INSERT INTO muscleGroup (name, createdAt) VALUES ("Espalda", ?)`,
       [new Date()]
     );
     await connection.query(
-      `INSERT INTO muscleGroup (name, createdAt) VALUES ("pecho", ?)`,
+      `INSERT INTO muscleGroup (name, createdAt) VALUES ("Pecho", ?)`,
       [new Date()]
     );
     await connection.query(
-      `INSERT INTO muscleGroup (name, createdAt) VALUES ("hombro", ?)`,
+      `INSERT INTO muscleGroup (name, createdAt) VALUES ("Hombro", ?)`,
       [new Date()]
     );
+
+    // Agregamos objetivos.
+    await connection.query(
+      `INSERT INTO goals (name, createdAt) VALUES ("Fuerza", ?)`,
+      [new Date()]
+    );
+
+    await connection.query(
+      `INSERT INTO goals (name, createdAt) VALUES ("Flexibilidad", ?)`,
+      [new Date()]
+    );
+
+    await connection.query(
+      `INSERT INTO goals (name, createdAt) VALUES ("Resistencia", ?)`,
+      [new Date()]
+    );
+
+    await connection.query(
+      `INSERT INTO goals (name, createdAt) VALUES ("Baja de peso", ?)`,
+      [new Date()]
+    );
+
     await insertExercises(connection);
-
-    // Ejercicios precargados
-    const [exercises] = await connection.query('SELECT * FROM exercises');
-
-    // Insertar el entrenamiento con ejercicios de su tipo
-    await insertWorkout(connection, exercises, 'Flexibilidad');
-    await insertWorkout(connection, exercises, 'Fuerza');
+    await insertWorkout(connection);
+    await insertExercisesWorkouts(connection);
   } catch (error) {
     console.error(error);
   } finally {

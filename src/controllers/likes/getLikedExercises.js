@@ -4,7 +4,6 @@ const { generateError } = require('../../middleware/helpers');
 const getLikedExercises = async (req, res, next) => {
   try {
     const userId = req.authUser.id;
-
     // Realiza la consulta para obtener los ejercicios a los que el usuario ha dado "me gusta"
     const connection = await getConnection();
     const [likedExercises] = await connection.query(
@@ -18,7 +17,8 @@ const getLikedExercises = async (req, res, next) => {
 
     res.send({
       status: 'ok',
-      Exercises: likedExercises,
+      message: req.authUser.id,
+      exercises: likedExercises,
     });
   } catch (error) {
     console.error(error);
